@@ -47,6 +47,11 @@ public class InventoryManager {
 			playerInv = playerInventorys.createSection(player.getUniqueId() + "." + world.getInventoryGroup() + "." + mode.toString());
 		}
 		
+		ConfigurationSection ign = playerInv.getConfigurationSection("ign");
+		if (ign == null) {
+			ign = playerInv.createSection("ign");
+		}
+		
 		ConfigurationSection armor = playerInv.getConfigurationSection("armor");
 		if (armor == null) {
 			armor = playerInv.createSection("armor");
@@ -57,6 +62,7 @@ public class InventoryManager {
 			inv = playerInv.createSection("inventory");
 		}
 		
+		playerInv.set("ign", player.getName());
 		playerInv.set("health", player.getHealth());
 		playerInv.set("food", player.getFoodLevel());
 		playerInv.set("exp_total", player.getTotalExperience());
