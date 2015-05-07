@@ -64,10 +64,10 @@ public class ListenerPlayer implements Listener {
 
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent event) {
-		String worldName = playerLeftInWorld.get(event.getPlayer().getName());
+		String worldName = playerLeftInWorld.get(event.getPlayer().getUniqueId());
 		DataWorld world = plugin.getWorlds().get(worldName);
 		
-		System.out.println("Player " + event.getPlayer().getName() + " trying to join in world " + worldName);
+		System.out.println("Player " + event.getPlayer().getName()  + " (" + event.getPlayer().getUniqueId() + ") trying to join in world " + worldName);
 		
 		if (world != null && !world.isLoaded())
 			world.load();
