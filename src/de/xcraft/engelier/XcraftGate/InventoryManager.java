@@ -42,9 +42,9 @@ public class InventoryManager {
 	}
 	
 	private static void saveInventory(Player player, DataWorld world, GameMode mode) {
-		ConfigurationSection playerInv = playerInventorys.getConfigurationSection(player.getName() + "." + world.getInventoryGroup() + "." + mode.toString());
+		ConfigurationSection playerInv = playerInventorys.getConfigurationSection(player.getUniqueId() + "." + world.getInventoryGroup() + "." + mode.toString());
 		if (playerInv == null) {
-			playerInv = playerInventorys.createSection(player.getName() + "." + world.getInventoryGroup() + "." + mode.toString());
+			playerInv = playerInventorys.createSection(player.getUniqueId() + "." + world.getInventoryGroup() + "." + mode.toString());
 		}
 		
 		ConfigurationSection armor = playerInv.getConfigurationSection("armor");
@@ -76,17 +76,17 @@ public class InventoryManager {
 	}
 	
 	private static void loadInventory(Player player, DataWorld world, GameMode mode) {
-		System.out.println("Loading Inventory " + mode.toString() + " in world " + world.getName() + " (group " + world.getInventoryGroup() + ") for " + player.getName());
+		System.out.println("Loading Inventory " + mode.toString() + " in world " + world.getName() + " (group " + world.getInventoryGroup() + ") for " + player.getUniqueId());
 		
 		boolean convertInv = false;
 		
-		ConfigurationSection playerInv = playerInventorys.getConfigurationSection(player.getName() + "." + world.getInventoryGroup() + "." + mode.toString());
+		ConfigurationSection playerInv = playerInventorys.getConfigurationSection(player.getUniqueId() + "." + world.getInventoryGroup() + "." + mode.toString());
 		if (playerInv == null) {
-			playerInv = playerInventorys.getConfigurationSection(player.getName() + "." + world.getName() + "." + mode.toString());
+			playerInv = playerInventorys.getConfigurationSection(player.getUniqueId() + "." + world.getName() + "." + mode.toString());
 			convertInv = true;
 			
 			if (playerInv == null) {
-				playerInv = playerInventorys.createSection(player.getName() + "." + world.getInventoryGroup() + "." + mode.toString());
+				playerInv = playerInventorys.createSection(player.getUniqueId() + "." + world.getInventoryGroup() + "." + mode.toString());
 				convertInv = false;
 			}
 		}
@@ -129,7 +129,7 @@ public class InventoryManager {
 		}
 		
 		if (convertInv) {
-			playerInventorys.set(player.getName() + "." + world.getName() + "." + mode.toString(), null);
+			playerInventorys.set(player.getUniqueId() + "." + world.getName() + "." + mode.toString(), null);
 		}
 		
 		player.updateInventory();
