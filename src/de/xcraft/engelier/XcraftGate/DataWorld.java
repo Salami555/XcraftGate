@@ -287,11 +287,7 @@ public class DataWorld {
 	private void killAllMonsters() {
 		if (world == null) return;
 		for (LivingEntity entity : world.getLivingEntities()) {
-			if (entity instanceof Zombie || entity instanceof Skeleton
-					|| entity instanceof PigZombie || entity instanceof Creeper
-					|| entity instanceof Ghast || entity instanceof Spider
-					|| entity instanceof Giant || entity instanceof Slime
-					|| entity instanceof Enderman);
+			if (entity instanceof Monster);
 				entity.remove();
 		}
 	}
@@ -299,9 +295,7 @@ public class DataWorld {
 	private void killAllAnimals() {
 		if (world == null) return;
 		for (LivingEntity entity : world.getLivingEntities()) {
-			if (entity instanceof Pig || entity instanceof Sheep
-					|| entity instanceof Wolf || entity instanceof Cow
-					|| entity instanceof Squid || entity instanceof Chicken)
+			if (entity instanceof Animals)
 				entity.remove();
 		}
 	}
