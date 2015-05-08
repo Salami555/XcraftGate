@@ -19,7 +19,7 @@ public class CommandWorldSetGameMode extends CommandHelperWorld {
 		
 		if (worldName == null) {
 			error("No world given.");
-			reply("Usage: /gworld setgamemode <worldname> <survival|creative|adventure>");
+			reply("Usage: /gworld setgamemode <worldname> <survival|creative|adventure|spectator>");
 		} else if (!hasWorld(worldName)) {
 			reply("World not found: " + worldName);
 		} else {
