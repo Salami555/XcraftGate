@@ -21,6 +21,7 @@ public class DataWorld {
 	private static Server server;
 
 	private String name;
+	private String message;
 	private Environment environment;
 	private boolean allowAnimals = true;
 	private boolean allowMonsters = true;
@@ -43,6 +44,7 @@ public class DataWorld {
 	private RespawnLocation respawnLocation = RespawnLocation.WORLDSPAWN;
 	private String respawnWorld = null;
 	private String inventoryGroup = name;
+	private String loginMessage = null;
 		
 	private long lastAction = 0;
 	private World world;
@@ -236,6 +238,7 @@ public class DataWorld {
 		values.put("respawnLocation", respawnLocation.toString());
 		values.put("respawnWorld", respawnWorld);
 		values.put("inventorygroup", inventoryGroup);
+		values.put("loginmessage", loginMessage);
 		return values;
 	}
 	
@@ -470,6 +473,14 @@ public class DataWorld {
 		} else {
 			return "MIDNIGHT";
 		}
+	}
+	
+	public String getLoginMessage() {
+		return this.loginMessage;
+	}
+
+	public void setLoginMessage(String message) {
+		this.loginMessage = message; 
 	}
 	
 	public void setParameters() {
