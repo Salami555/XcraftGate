@@ -71,6 +71,8 @@ public class ListenerPlayer implements Listener {
 		
 		if (world != null && !world.isLoaded())
 			world.load();
+		if (!event.getPlayer().hasPermission("XcraftGate.world.nogamemodechange"))
+			event.getPlayer().setGameMode(GameMode.getByValue(world.getGameMode()));
 	}
 	
 	@EventHandler
