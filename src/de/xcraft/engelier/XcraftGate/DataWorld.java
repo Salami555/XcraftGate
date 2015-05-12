@@ -519,6 +519,7 @@ public class DataWorld {
 		sender.sendMessage("Inventory Group: " + inventoryGroup);
 		sender.sendMessage("GameMode / Difficulty: " + GameMode.getByValue(gamemode) + " / " + Difficulty.getByValue(difficulty));
 		sender.sendMessage("Announce player deaths: " + (announcePlayerDeath ? "Yes" : "No"));
+		sender.sendMessage("Login Message: " + (loginMessage != null ? loginMessage : "none"));
 		if (world != null) {
 			sender.sendMessage("Gamerules:");
 			for (String thisRule : world.getGameRules()) {
