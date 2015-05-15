@@ -21,18 +21,15 @@ public class CommandWorldSetLoginMessage extends CommandHelperWorld {
 			reply("Usage: /gworld setloginmessage <worldname> [message]");
 		} else if (!hasWorld(worldName)) {
 			reply("World not found: " + worldName);
+		} else if (args == null) {
+			getWorld(worldName).setLoginMessage("none");
+			reply("Reset login message on world " + worldName + ".");
 		} else {
 			String newMessage = null;
-			
-			newMessage = args.toString(); //use multiple arguments, hope it works
+			newMessage = joinString(args, ""); //use multiple arguments, hope it works
 			
 			getWorld(worldName).setLoginMessage(newMessage);
-			if (newMessage == null) {
-			  reply("Reset login message on world " + worldName + ".");
-			}
-			else {
-			  reply("Login message on world " + worldName + " set to " + newMessage);
-			}
+			reply("Login message on world " + worldName + " set to " + newMessage);
 		}
 	}
 
