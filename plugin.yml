@@ -95,8 +95,8 @@ permissions:
   XcraftGate.world.difficulty:
     description: Access to /gworld setdifficulty, /gworld setannouncedeath
   XcraftGate.world.gamemode:
-    description: Access to /gworld gamemode
+    description: Access to /gworld setgamemode, /gworld setgamerule, /gworld setloginmessage
   XcraftGate.world.spawn:
     description: Access to /gworld setspawn
   XcraftGate.world.npgamemodechange:
-    description: Don't change player's gamemode on world change
+    description: Don't change player's gamemode on world change or login
