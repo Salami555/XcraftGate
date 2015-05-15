@@ -13,7 +13,7 @@ public class CommandWorldSetLoginMessage extends CommandHelperWorld {
 	}
 
 	@Override
-	public void execute(CommandSender sender, String worldName,	List<String> args) {
+	public void execute(CommandSender sender, String worldName, List<String> args) {
 		this.sender = sender;
 		
 		if (worldName == null) {
@@ -23,8 +23,8 @@ public class CommandWorldSetLoginMessage extends CommandHelperWorld {
 			reply("World not found: " + worldName);
 		} else {
 			Message newMessage = null;
-		
-      //use multiple arguments
+			
+			newMessage = args.toString(); //use multiple arguments, hope it works
 			
 			getWorld(worldName).setLoginMessage(newMessage);
 			if (newMessage == null) {
