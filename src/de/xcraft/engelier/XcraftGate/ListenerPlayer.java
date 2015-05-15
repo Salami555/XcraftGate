@@ -74,7 +74,7 @@ public class ListenerPlayer implements Listener {
 			world.load();
 		if (!event.getPlayer().hasPermission("XcraftGate.world.nogamemodechange"))
 			event.getPlayer().setGameMode(GameMode.getByValue(world.getGameMode()));
-		if (!(loginMessage == null))
+		if (!(loginMessage == "none"))
 			event.getPlayer().sendMessage(ChatColor.AQUA + loginMessage);
 	}
 	
