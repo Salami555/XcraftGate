@@ -22,7 +22,7 @@ public class CommandWorldSetLoginMessage extends CommandHelperWorld {
 		} else if (!hasWorld(worldName)) {
 			reply("World not found: " + worldName);
 		} else {
-			Message newMessage = null;
+			String newMessage = null;
 			
 			newMessage = args.toString(); //use multiple arguments, hope it works
 			
