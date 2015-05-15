@@ -44,7 +44,7 @@ public class DataWorld {
 	private RespawnLocation respawnLocation = RespawnLocation.WORLDSPAWN;
 	private String respawnWorld = null;
 	private String inventoryGroup = name;
-	private String loginMessage = null;
+	private String loginMessage = "none";
 		
 	private long lastAction = 0;
 	private World world;
@@ -519,7 +519,7 @@ public class DataWorld {
 		sender.sendMessage("Inventory Group: " + inventoryGroup);
 		sender.sendMessage("GameMode / Difficulty: " + GameMode.getByValue(gamemode) + " / " + Difficulty.getByValue(difficulty));
 		sender.sendMessage("Announce player deaths: " + (announcePlayerDeath ? "Yes" : "No"));
-		sender.sendMessage("Login Message: " + (loginMessage != null ? loginMessage : "none"));
+		sender.sendMessage("Login Message: " + loginMessage);
 		if (world != null) {
 			sender.sendMessage("Gamerules:");
 			for (String thisRule : world.getGameRules()) {
