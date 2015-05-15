@@ -66,7 +66,7 @@ public class ListenerPlayer implements Listener {
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		String worldName = playerLeftInWorld.get(event.getPlayer().getUniqueId());
 		DataWorld world = plugin.getWorlds().get(worldName);
-		String loginMessage = world.getLoginMessage;
+		String loginMessage = world.getLoginMessage();
 		
 		System.out.println("Player " + event.getPlayer().getName()  + " (" + event.getPlayer().getUniqueId() + ") trying to join in world " + worldName);
 		
@@ -74,8 +74,8 @@ public class ListenerPlayer implements Listener {
 			world.load();
 		if (!event.getPlayer().hasPermission("XcraftGate.world.nogamemodechange"))
 			event.getPlayer().setGameMode(GameMode.getByValue(world.getGameMode()));
-		if (!loginMessage == null)
-			event.getPlayer().sendMessage(ChatColor.AQUA + loginMessage;
+		if (!(loginMessage == null))
+			event.getPlayer().sendMessage(ChatColor.AQUA + loginMessage);
 	}
 	
 	@EventHandler
