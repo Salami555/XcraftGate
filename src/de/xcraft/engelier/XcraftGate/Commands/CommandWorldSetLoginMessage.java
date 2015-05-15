@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 
 import de.xcraft.engelier.XcraftGate.XcraftGate;
+import de.xcraft.engelier.XcraftGate.Util;
 
 public class CommandWorldSetLoginMessage extends CommandHelperWorld {
 
@@ -26,7 +27,7 @@ public class CommandWorldSetLoginMessage extends CommandHelperWorld {
 			reply("Reset login message on world " + worldName + ".");
 		} else {
 			String newMessage = null;
-			newMessage = joinString(args, ""); //use multiple arguments, hope it works
+			newMessage = Util.joinString(args, ""); //use multiple arguments, hope it works
 			
 			getWorld(worldName).setLoginMessage(newMessage);
 			reply("Login message on world " + worldName + " set to " + newMessage);
