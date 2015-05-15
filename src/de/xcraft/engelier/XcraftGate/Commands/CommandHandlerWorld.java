@@ -47,6 +47,7 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
 		permNodes.put("setannouncedeath", "difficulty");
 		permNodes.put("setgamemode", "gamemode");
 		permNodes.put("setgamerule", "gamemode");
+		permNodes.put("setloginmessage", "gamemode");
 		permNodes.put("setspawn", "spawn");
 		permNodes.put("setrespawnlocation", "spawn");
 		permNodes.put("setinventorygroup", "inventory");
@@ -76,6 +77,7 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
 		subcommands.put("setdifficulty", new CommandWorldSetDifficulty(plugin));
 		subcommands.put("setgamemode", new CommandWorldSetGameMode(plugin));
 		subcommands.put("setgamerule", new CommandWorldSetGameRule(plugin));
+		subcommands.put("setloginmessage", new CommandWorldSetLoginMessage(plugin));
 		subcommands.put("setannouncedeath", new CommandWorldSetAnnounceDeath(plugin));
 		subcommands.put("setspawn", new CommandWorldSetSpawn(plugin));
 		subcommands.put("setrespawnlocation", new CommandWorldSetRespawnLocation(plugin));
@@ -104,6 +106,7 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld setannouncedeath <world> <true|false>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld setgamemode <world> <survival|creative|adventure>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld setgamerule <world> <rulename> <value>");
+		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld setloginmessage <world> [message]");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld setspawn <world>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld setrespawnlocation <world> <worldspawn|bedspawn|world <worldname>>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld suppresshealthregain <world> <true|false>");
@@ -129,7 +132,7 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
 		}
 
 		if (player == null && (args[0].equalsIgnoreCase("warpto") || args[0].equalsIgnoreCase("setspawn"))) {
-			error("/gworld warpto or setspawn cannot be used from the console");
+			error("/gworld" + args[0].toLowerCase() + "cannot be used from the console");
 			return true;
 		}
 		
