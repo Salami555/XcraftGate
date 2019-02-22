@@ -121,7 +121,11 @@ public class InventoryManager {
 		player.getInventory().setContents(thisInv);
 		
 		if (plugin.getConfig().getBoolean("invsep.health")) {
-			player.setHealth(playerInv.getInt("health", 20));
+            int health = playerInv.getInt("health", 20);
+            if (health > 20 | health == 0) {
+                health = 20;
+            }
+            player.setHealth((double)health);
 		}
 		
 		if (plugin.getConfig().getBoolean("invsep.food")) {
