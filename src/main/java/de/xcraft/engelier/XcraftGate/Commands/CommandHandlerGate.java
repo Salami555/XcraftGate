@@ -1,5 +1,21 @@
 package de.xcraft.engelier.XcraftGate.Commands;
 
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateSetToll;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateWarp;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateList;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateInfo;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateCreate;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateRename;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateLoop;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateUnlink;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateSetDenySilent;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateMove;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateReload;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateDelete;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateListsolo;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateListnear;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateLink;
+import de.xcraft.engelier.XcraftGate.Commands.Gate.CommandGateUnloop;
 import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +70,7 @@ public class CommandHandlerGate extends CommandHelper implements CommandExecutor
 		subcommands.put("settoll", new CommandGateSetToll(plugin));
 	}
 	
-	public void printUsage() {
+	public void printUsage(CommandSender sender) {
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + plugin.getNameBrackets() + "by Engelier");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gate info <name>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gate create <name>");
@@ -75,27 +91,26 @@ public class CommandHandlerGate extends CommandHelper implements CommandExecutor
 	
     @Override
 	public boolean onCommand(CommandSender sender, Command cmd,	String commandLabel, String[] args) {
-		this.sender = sender;
-		player = (sender instanceof Player) ? (Player) sender : null;
+		Player player = (sender instanceof Player) ? (Player) sender : null;
 		
 		if (player == null) {
-			error("/gate cannot be used from the console");
+			error(sender, "/gate cannot be used from the console");
 			return true;
 		}
 		
-		if (!isPermitted("gate", (args.length > 0 ? permNodes.get(args[0]) : null))) {
-			error("You don't have permission to use this command");
+		if (!isPermitted(player, "gate", (args.length > 0 ? permNodes.get(args[0]) : null))) {
+			error(sender, "You don't have permission to use this command");
 			return true;
 		}
 		
 		if (args.length == 0) {
-			printUsage();
+			printUsage(sender);
 			return true;
 		}
 		
 		if (subcommands.get(args[0].toLowerCase()) == null) {
-			printUsage();
-			error("Unkown gate command: " + args[0].toLowerCase());
+			printUsage(sender);
+			error(sender, "Unkown gate command: " + args[0].toLowerCase());
 		} else {
 			List<String> largs = Arrays.asList(args);
 			largs = largs.subList(1, largs.size());

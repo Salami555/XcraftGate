@@ -6,23 +6,21 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public abstract class CommandHelper {
-	protected XcraftGate plugin = null;
-	protected CommandSender sender = null;
-	protected Player player;
+	protected final XcraftGate plugin;
 
 	public CommandHelper(XcraftGate instance) {
 		plugin = instance;
 	}
 
-	public void reply(String message) {
+	public void reply(CommandSender sender, String message) {
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + plugin.getNameBrackets() + ChatColor.DARK_AQUA + message);
 	}
 
-	public void error(String message) {
+	public void error(CommandSender sender, String message) {
 		sender.sendMessage(ChatColor.RED + "Error: " + message);
 	}
 
-	public boolean isPermitted(String command, String subcommand) {
+	public boolean isPermitted(Player player, String command, String subcommand) {
 		if (player == null) {
 			return true;
 		}
