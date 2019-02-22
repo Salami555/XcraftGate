@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class PluginManager implements Runnable {
+public class PluginManager {
 	private final XcraftGate core;
 	private final org.bukkit.plugin.PluginManager pm;
 	
@@ -32,7 +32,7 @@ public class PluginManager implements Runnable {
 		return economy;
 	}
 	
-	private void checkPluginVault() {
+	public void checkPluginVault() {
 		if (vault != null)
 			return;
 		
@@ -65,10 +65,4 @@ public class PluginManager implements Runnable {
 		}
 
 	}
-	
-	@Override
-	public void run() {
-		checkPluginVault();
-	}
-
 }
