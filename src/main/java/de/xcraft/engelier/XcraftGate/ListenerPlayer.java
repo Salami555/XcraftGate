@@ -30,7 +30,7 @@ public class ListenerPlayer implements Listener {
 	private Location location;
 	private DataGate gate = null;	
     private XcraftGate plugin = null;
-	private Map<UUID, String> playerDiedInWorld = new HashMap<>();
+	private final Map<UUID, String> playerDiedInWorld = new HashMap<>();
     private Map<String, String> playerLeftInWorld = new HashMap<>();
 
     public ListenerPlayer(XcraftGate instance) {

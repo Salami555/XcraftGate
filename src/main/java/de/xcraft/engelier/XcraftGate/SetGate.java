@@ -16,8 +16,8 @@ import org.yaml.snakeyaml.Yaml;
 
 public class SetGate implements Iterable<DataGate> {
 	private static XcraftGate plugin;
-	private Map<String, DataGate> gates = new HashMap<>();
-	private Map<String, String> gateLocations = new HashMap<>();
+	private final Map<String, DataGate> gates = new HashMap<>();
+	private final Map<String, String> gateLocations = new HashMap<>();
 	
 	public SetGate (XcraftGate plugin) {
 		SetGate.plugin = plugin;

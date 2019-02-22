@@ -30,8 +30,8 @@ public class XcraftGate extends JavaPlugin {
 
 	private PluginManager pm = null;
 	
-	private SetWorld worlds = new SetWorld(this);
-	private SetGate gates = new SetGate(this);
+	private final SetWorld worlds = new SetWorld(this);
+	private final SetGate gates = new SetGate(this);
 	
 	public Map<String, Location> justTeleported = new HashMap<>();
 	public Map<String, Location> justTeleportedFrom = new HashMap<>();

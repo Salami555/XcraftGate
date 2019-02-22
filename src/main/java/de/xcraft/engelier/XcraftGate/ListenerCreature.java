@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class ListenerCreature implements Listener {
-	private XcraftGate plugin;
+	private final XcraftGate plugin;
 
 	public ListenerCreature(XcraftGate instance) {
 		plugin = instance;

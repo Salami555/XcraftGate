@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 public class ListenerWeather implements Listener {
-	private XcraftGate plugin;
+	private final XcraftGate plugin;
 	
 	public ListenerWeather (XcraftGate instance) {
 		plugin = instance;

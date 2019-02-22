@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.*;
 
 public class ListenerWorld implements Listener {
-	private XcraftGate plugin;
+	private final XcraftGate plugin;
 	
 	public ListenerWorld (XcraftGate instance) {
 		plugin = instance;

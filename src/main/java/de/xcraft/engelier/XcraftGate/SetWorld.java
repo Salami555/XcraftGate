@@ -16,7 +16,7 @@ import org.yaml.snakeyaml.Yaml;
 
 public class SetWorld implements Iterable<DataWorld> {
 	private static XcraftGate plugin;
-	private Map<String, DataWorld> worlds = new HashMap<>();
+	private final Map<String, DataWorld> worlds = new HashMap<>();
 	
 	public SetWorld (XcraftGate plugin) {
 		SetWorld.plugin = plugin;

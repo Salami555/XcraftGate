@@ -13,8 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CommandHandlerGate extends CommandHelper implements CommandExecutor {
-	private static Map<String, CommandHelperGate> subcommands = new HashMap<>();
-	private static Map<String, String> permNodes = new HashMap<>();
+	private static final Map<String, CommandHelperGate> subcommands = new HashMap<>();
+	private static final Map<String, String> permNodes = new HashMap<>();
 
 	public CommandHandlerGate(XcraftGate instance) {
 		super(instance);
