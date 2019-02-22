@@ -9,32 +9,20 @@ import org.bukkit.generator.ChunkGenerator;
 
 public class GeneratorFlatlands extends ChunkGenerator {
 
-	@Override
-	public byte[] generate(World arg0, Random arg1, int arg2, int arg3) {
-        byte[] result = new byte[32768];
+    @Override
+    public ChunkGenerator.ChunkData generateChunkData(World world, Random random, int x, int z, ChunkGenerator.BiomeGrid biome) {
+        ChunkGenerator.ChunkData data = this.createChunkData(world);
+        data.setRegion(0, 0, 0, 16, 54, 16, Material.STONE);
+        data.setRegion(0, 54, 0, 16, 64, 16, Material.DIRT);
+        data.setRegion(0, 64, 0, 16, 65, 16, Material.GRASS);
+        return data;
+    }
 
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                for (int y = 0; y < 64; y++) {
-                	if (y < 54) {
-                		result[(x * 16 + z) * 128 + y] = (byte)Material.STONE.getId();
-                	} else if (y < 63) {
-                		result[(x * 16 + z) * 128 + y] = (byte)Material.DIRT.getId();                		
-                	} else {
-                		result[(x * 16 + z) * 128 + y] = (byte)Material.GRASS.getId();
-                	}
-                }
-            }
-        }
-
-        return result;
-	}
-	
 	@Override
 	public Location getFixedSpawnLocation(World world, Random random) {
         int x = random.nextInt(200) - 100;
         int z = random.nextInt(200) - 100;
         int y = world.getHighestBlockYAt(x, z);
-        return new Location(world, x, y, z);
+        return new Location(world, (double) x, (double) y, (double) z);
     }
 }
