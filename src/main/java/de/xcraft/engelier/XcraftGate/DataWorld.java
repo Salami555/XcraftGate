@@ -3,6 +3,7 @@ package de.xcraft.engelier.XcraftGate;
 import de.xcraft.engelier.XcraftGate.Generator.Generator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -183,12 +184,12 @@ public class DataWorld {
 		
 		lastAction = System.currentTimeMillis();
 
-		plugin.getLogger().info(plugin.getNameBrackets() + "loaded world " + name + " (Environment: " + environment.toString() + ", Seed: " + world.getSeed() + ", Generator: " + generator.toString() + ")");
+		plugin.getLogger().log(Level.INFO, "{0}loaded world {1} (Environment: {2}, Seed: {3}, Generator: {4})", new Object[]{plugin.getNameBrackets(), name, environment.toString(), world.getSeed(), generator.toString()});
 	}
 	
 	public void unload() {
 		server.unloadWorld(world, true);
-		plugin.getLogger().info(plugin.getNameBrackets() + "unloaded world " + world.getName());
+		plugin.getLogger().log(Level.INFO, "{0}unloaded world {1}", new Object[]{plugin.getNameBrackets(), world.getName()});
 		this.world = null;
 	}
 	

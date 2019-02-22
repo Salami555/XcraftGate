@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.permissions.Permission;
@@ -34,7 +35,7 @@ public class SetGate implements Iterable<DataGate> {
 			Map<String, Object> gatesYaml = (Map<String, Object>) yaml.load(new FileInputStream(configFile));
 			
 			if (gatesYaml == null) {
-				plugin.getLogger().info(plugin.getNameBrackets() + "empty gates.yml - initializing");
+				plugin.getLogger().log(Level.INFO, "{0}empty gates.yml - initializing", plugin.getNameBrackets());
 				return;
 			}
 			
@@ -66,7 +67,7 @@ public class SetGate implements Iterable<DataGate> {
 					DataGate thisTarget = get((String) gateData.get("target"));
 					
 					if (thisTarget == null) {
-						plugin.getLogger().warning(plugin.getNameBrackets() + "ignored invalid destination for gate " + gateName);
+						plugin.getLogger().log(Level.WARNING, "{0}ignored invalid destination for gate {1}", new Object[]{plugin.getNameBrackets(), gateName});
 					} else {
 						get(gateName).linkTo(thisTarget, false);
 					}
@@ -77,7 +78,7 @@ public class SetGate implements Iterable<DataGate> {
 			ex.printStackTrace();
 		}
 
-		plugin.getLogger().info(plugin.getNameBrackets() + "loaded " + counter + " gates");
+		plugin.getLogger().log(Level.INFO, "{0}loaded {1} gates", new Object[]{plugin.getNameBrackets(), counter});
 	}
 
 	public void save() {
@@ -193,7 +194,7 @@ public class SetGate implements Iterable<DataGate> {
 			}
 		}
 		
-		plugin.getLogger().info(plugin.getNameBrackets() + "loaded " + gateCounter + " gates for world '" + world.getName() + "'");
+		plugin.getLogger().log(Level.INFO, "{0}loaded {1} gates for world ''{2}''", new Object[]{plugin.getNameBrackets(), gateCounter, world.getName()});
 	}
 	
 	public void onWorldUnload(World world) {

@@ -1,5 +1,6 @@
 package de.xcraft.engelier.XcraftGate;
 
+import java.util.logging.Level;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -23,7 +24,7 @@ public class ListenerWorld implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onWorldUnload(WorldUnloadEvent event) {
 		World world = event.getWorld();
-		plugin.getLogger().info(plugin.getNameBrackets() + "trying to unload world " + world.getName());
+		plugin.getLogger().log(Level.INFO, "{0}trying to unload world {1}", new Object[]{plugin.getNameBrackets(), world.getName()});
 		// this is never called?!
 	}
 }

@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.yaml.snakeyaml.Yaml;
@@ -34,7 +35,7 @@ public class SetWorld implements Iterable<DataWorld> {
 			DataWorld newWorld;
 			
 			if (worldsYaml == null) {
-				plugin.getLogger().info(plugin.getNameBrackets() + "empty worlds.yml - initializing");
+				plugin.getLogger().log(Level.INFO, "{0}empty worlds.yml - initializing", plugin.getNameBrackets());
 				return;
 			}
 			
@@ -104,7 +105,7 @@ public class SetWorld implements Iterable<DataWorld> {
 			ex.printStackTrace();
 		}		
 		
-		plugin.getLogger().info(plugin.getNameBrackets() + "loaded " + counter + " world configurations");
+		plugin.getLogger().log(Level.INFO, "{0}loaded {1} world configurations", new Object[]{plugin.getNameBrackets(), counter});
 	}
 
 	public void save() {
@@ -129,11 +130,11 @@ public class SetWorld implements Iterable<DataWorld> {
 	
 	public void onWorldLoad(final World world) {
 		if (worlds.get(world.getName()) != null) {
-			plugin.getLogger().info(plugin.getNameBrackets() + "World '" + world.getName() + "' loading. Applying config.");
+			plugin.getLogger().log(Level.INFO, "{0}World ''{1}'' loading. Applying config.", new Object[]{plugin.getNameBrackets(), world.getName()});
 			get(world).setWorld(world);
 			get(world).setParameters();					
 		} else {
-			plugin.getLogger().info(plugin.getNameBrackets() + "World '" + world.getName() + "' detected. Adding to config.");
+			plugin.getLogger().log(Level.INFO, "{0}World ''{1}'' detected. Adding to config.", new Object[]{plugin.getNameBrackets(), world.getName()});
 			DataWorld newWorld = new DataWorld(plugin, world.getName(), world.getEnvironment());
 			add(newWorld);
 			save();

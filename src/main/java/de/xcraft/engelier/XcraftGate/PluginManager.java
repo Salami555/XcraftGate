@@ -1,5 +1,6 @@
 package de.xcraft.engelier.XcraftGate;
 
+import java.util.logging.Level;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.event.Listener;
@@ -39,18 +40,18 @@ public class PluginManager {
 		Plugin vaultCheck = pm.getPlugin("Vault");
 		if (vaultCheck != null && vaultCheck.isEnabled()) {
 			vault = vaultCheck;
-			core.getLogger().info(core.getNameBrackets() + "found Vault plugin.");
+			core.getLogger().log(Level.INFO, "{0}found Vault plugin.", core.getNameBrackets());
 			
 	        RegisteredServiceProvider<Permission> permissionProvider = core.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 	        if (permissionProvider != null) {
 	            permission = permissionProvider.getProvider();
-	            core.getLogger().info(core.getNameBrackets() + "Reported permission provider: " + permission.getName());
+	            core.getLogger().log(Level.INFO, "{0}Reported permission provider: {1}", new Object[]{core.getNameBrackets(), permission.getName()});
 	        }
 
 	        RegisteredServiceProvider<Economy> economyProvider = core.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 	        if (economyProvider != null) {
 	            economy = economyProvider.getProvider();
-	            core.getLogger().info(core.getNameBrackets() + "Reported economy provider: " + economy.getName());
+	            core.getLogger().log(Level.INFO, "{0}Reported economy provider: {1}", new Object[]{core.getNameBrackets(), economy.getName()});
 	        }
 
 		}
@@ -61,7 +62,7 @@ public class PluginManager {
 			permission = null;
 			economy = null;
 			vault = null;
-			core.getLogger().info(core.getNameBrackets() + "lost Vault plugin");
+			core.getLogger().log(Level.INFO, "{0}lost Vault plugin", core.getNameBrackets());
 		}
 
 	}

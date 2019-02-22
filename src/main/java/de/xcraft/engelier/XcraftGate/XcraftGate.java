@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -58,7 +58,7 @@ public class XcraftGate extends JavaPlugin {
     public void taskCheckWorldInactive() {
         for (World thisWorld : getServer().getWorlds()) {
             if (worlds.get(thisWorld).checkInactive() && !thisWorld.getName().equalsIgnoreCase(serverconfig.getProperty("level-name"))) {
-                getLogger().info(getNameBrackets() + "World '" + thisWorld.getName() + "' inactive. Unloading.");
+                getLogger().log(Level.INFO, "{0}World ''{1}'' inactive. Unloading.", new Object[]{getNameBrackets(), thisWorld.getName()});
 
                 worlds.get(thisWorld).unload();
             }
@@ -106,12 +106,12 @@ public class XcraftGate extends JavaPlugin {
 
         File serverconfigFile = new File("server.properties");
         if (!serverconfigFile.exists()) {
-            getLogger().severe(getNameBrackets() + "unable to load server.properties.");
+            getLogger().log(Level.SEVERE, "{0}unable to load server.properties.", getNameBrackets());
         } else {
             try {
                 serverconfig.load(new FileInputStream(serverconfigFile));
             } catch (Exception ex) {
-                getLogger().severe(getNameBrackets() + "error loading " + serverconfigFile);
+                getLogger().log(Level.SEVERE, "{0}error loading {1}", new Object[]{getNameBrackets(), serverconfigFile});
                 ex.printStackTrace();
             }
         }
@@ -140,7 +140,7 @@ public class XcraftGate extends JavaPlugin {
             getCommand("gate").setExecutor(new CommandHandlerGate(this));
             getCommand("gworld").setExecutor(new CommandHandlerWorld(this));
         } catch (Exception ex) {
-            getLogger().warning(getNameBrackets() + "getCommand().setExecutor() failed! Seems I got enabled by another plugin. Nag the bukkit team about this!");
+            getLogger().log(Level.WARNING, "{0}getCommand().setExecutor() failed! Seems I got enabled by another plugin. Nag the bukkit team about this!", getNameBrackets());
         }
     }
 
