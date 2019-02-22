@@ -1,7 +1,7 @@
 name: XcraftGate
 main: de.xcraft.engelier.XcraftGate.XcraftGate
-version: "0.13"
-author: Engelier
+version: ${pom.version}
+authors: [Engelier, Voronwe, Salami555]
 load: startup
 commands:
   gate:
