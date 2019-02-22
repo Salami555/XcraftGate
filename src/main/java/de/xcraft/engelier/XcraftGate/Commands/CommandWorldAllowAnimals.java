@@ -22,7 +22,7 @@ public class CommandWorldAllowAnimals extends CommandHelperWorld {
 		} else {
 			Boolean allowed;
 			
-			allowed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			allowed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setAllowAnimals(allowed);
 			reply("Animal spawn on " + worldName + (allowed ? " enabled." : " disabled."));

@@ -22,7 +22,7 @@ public class CommandWorldTimeFrozen extends CommandHelperWorld {
 		} else {
 			Boolean frozen;
 			
-			frozen = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			frozen = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setTimeFrozen(frozen);
 			reply("Time on " + worldName + (frozen ? " freezed." : " unfreezed."));

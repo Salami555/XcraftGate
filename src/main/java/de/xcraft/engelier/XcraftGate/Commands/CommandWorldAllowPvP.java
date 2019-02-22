@@ -22,7 +22,7 @@ public class CommandWorldAllowPvP extends CommandHelperWorld {
 		} else {
 			Boolean allowed;
 			
-			allowed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			allowed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setAllowPvP(allowed);
 			reply("PvP on " + worldName + (allowed ? " enabled." : " disabled."));

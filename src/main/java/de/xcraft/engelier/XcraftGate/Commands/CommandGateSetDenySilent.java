@@ -22,7 +22,7 @@ public class CommandGateSetDenySilent extends CommandHelperGate {
 		} else {
 			Boolean denysilent;
 			
-			denysilent = (args.size() == 0 || args.get(0).equalsIgnoreCase("true")) ? true : false;
+			denysilent = (args.size() == 0 || args.get(0).equalsIgnoreCase("true"));
 
 			getGate(gateName).setDenySilent(denysilent);
 			reply("Gate " + gateName + " denys usage " + (denysilent ? "silently." : "loudly."));

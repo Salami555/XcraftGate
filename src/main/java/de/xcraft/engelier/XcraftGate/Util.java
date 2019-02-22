@@ -36,7 +36,7 @@ public class Util {
 		} else if (o instanceof Boolean) {
 			return (Boolean)o;
 		} else if (o instanceof String) {
-			return ((String)o).equalsIgnoreCase("true") ? true : false;
+			return ((String)o).equalsIgnoreCase("true");
 		} else {
 			return false;
 		}

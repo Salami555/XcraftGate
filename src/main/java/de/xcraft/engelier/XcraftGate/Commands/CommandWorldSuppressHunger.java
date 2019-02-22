@@ -22,7 +22,7 @@ public class CommandWorldSuppressHunger extends CommandHelperWorld {
 		} else {
 			Boolean suppressed;
 			
-			suppressed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			suppressed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setSuppressHunger(suppressed);
 			reply("Food bar depletion on " + worldName + (suppressed ? " suppressed." : " enabled."));

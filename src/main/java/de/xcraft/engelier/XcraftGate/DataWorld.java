@@ -266,11 +266,7 @@ public class DataWorld {
 			return false;
 		}
 		
-		if (lastAction + plugin.config.getInt("dynworld.maxInactiveTime", 300) * 1000 < System.currentTimeMillis()) {
-			return true;
-		}
-		
-		return false;
+		return lastAction + plugin.config.getInt("dynworld.maxInactiveTime", 300) * 1000 < System.currentTimeMillis();
 	}
 	
 	public void setWorldTime(long time) {

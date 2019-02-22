@@ -22,7 +22,7 @@ public class CommandWorldSetAnnounceDeath extends CommandHelperWorld {
 		} else {
 			Boolean announce;
 			
-			announce = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			announce = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setAnnouncePlayerDeath(announce);
 			reply("Death announcements on " + worldName + (announce ? " enabled." : " disabled."));

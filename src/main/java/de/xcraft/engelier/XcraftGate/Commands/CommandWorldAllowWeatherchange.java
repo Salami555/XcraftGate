@@ -22,7 +22,7 @@ public class CommandWorldAllowWeatherchange extends CommandHelperWorld {
 		} else {
 			Boolean allowed;
 			
-			allowed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			allowed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setAllowWeatherChange(allowed);
 			reply("Weather changes on " + worldName + (allowed ? " enabled." : " disabled."));

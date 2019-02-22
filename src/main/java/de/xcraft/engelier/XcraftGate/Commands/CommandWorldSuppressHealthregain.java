@@ -22,7 +22,7 @@ public class CommandWorldSuppressHealthregain extends CommandHelperWorld {
 		} else {
 			Boolean suppressed;
 			
-			suppressed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			suppressed = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setSuppressHealthRegain(suppressed);
 			reply("Automatic health regain on " + worldName + (suppressed ? " suppressed." : " enabled."));

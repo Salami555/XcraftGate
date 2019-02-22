@@ -23,7 +23,7 @@ public class CommandWorldKeepSpawnInMemory extends CommandHelperWorld {
 		} else {
 			Boolean keep;
 			
-			keep = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			keep = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setKeepSpawnInMemory(keep);
 			reply("Spawnarea on " + worldName + (keep ? " stays in memory." : " will get unloaded normally."));

@@ -22,7 +22,7 @@ public class CommandWorldSetSticky extends CommandHelperWorld {
 		} else {
 			Boolean sticky;
 			
-			sticky = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false")) ? true : false;
+			sticky = (args.size() == 0 || !args.get(0).equalsIgnoreCase("false"));
 
 			getWorld(worldName).setSticky(sticky);
 			reply((sticky ? "Sticked" : "Unsticked") + " world " + worldName + ".");
