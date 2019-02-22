@@ -1,8 +1,5 @@
 package de.xcraft.engelier.XcraftGate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.Location;
 
 public class Util {
@@ -59,41 +56,5 @@ public class Util {
 		double z = Math.floor(loc.getZ()) + 0.5;
 		
 		return new Location(loc.getWorld(), x, y, z, loc.getYaw(), loc.getPitch());
-	}
-	
-	public static String joinString(String[] array) {
-		return joinString(Arrays.asList(array), ",");
-	}
-	
-	public static String joinString(String[] array, String seperator) {
-		return joinString(Arrays.asList(array), seperator);
-	}
-
-	public static String joinString(List<String> array) {
-		return joinString(array, ",");
-	}	
-
-	public static String joinString(List<String> array, String seperator) {
-		StringBuilder ret = new StringBuilder();
-		
-		for (String part : array) {
-			if (ret.length() > 0) {
-				ret.append(seperator);
-			}
-			
-			ret.append(part);
-		}
-		
-		return ret.toString();
-	}
-	
-	public static String joinInteger(Integer[] array, String seperator) {
-		List<String> stringlist = new ArrayList<>();
-		
-		for (Integer value : array) {
-			stringlist.add("" + value);
-		}
-		
-		return joinString(stringlist, seperator);
 	}
 }

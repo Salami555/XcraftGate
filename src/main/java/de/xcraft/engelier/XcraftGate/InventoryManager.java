@@ -45,12 +45,7 @@ public class InventoryManager {
 		if (playerInv == null) {
 			playerInv = playerInventorys.createSection(player.getUniqueId() + "." + world.getInventoryGroup() + "." + mode.toString());
 		}
-		
-		ConfigurationSection ign = playerInv.getConfigurationSection("ign");
-		if (ign == null) {
-			ign = playerInv.createSection("ign");
-		}
-		
+				
 		ConfigurationSection armor = playerInv.getConfigurationSection("armor");
 		if (armor == null) {
 			armor = playerInv.createSection("armor");
