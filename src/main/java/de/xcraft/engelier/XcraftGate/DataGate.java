@@ -2,7 +2,6 @@ package de.xcraft.engelier.XcraftGate;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -31,7 +30,7 @@ public class DataGate {
 	}
 	
 	public Map<String, Object> toMap() {
-		Map<String, Object> values = new HashMap<String, Object>();
+		Map<String, Object> values = new HashMap<>();
 		
 		values.put("name", gateName);
 		values.put("world", worldName);

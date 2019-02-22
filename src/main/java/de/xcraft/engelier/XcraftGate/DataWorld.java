@@ -1,8 +1,8 @@
 package de.xcraft.engelier.XcraftGate;
 
+import de.xcraft.engelier.XcraftGate.Generator.Generator;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.bukkit.Difficulty;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -13,8 +13,6 @@ import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.generator.ChunkGenerator;
-
-import de.xcraft.engelier.XcraftGate.Generator.Generator;
 
 public class DataWorld {
 	private static XcraftGate plugin;
@@ -83,7 +81,7 @@ public class DataWorld {
 		STORM(1);
 
 		private final int id;
-		private static final Map<Integer, Weather> lookup = new HashMap<Integer, Weather>();
+		private static final Map<Integer, Weather> lookup = new HashMap<>();
 
 		private Weather(int id) {
 			this.id = id;
@@ -111,7 +109,7 @@ public class DataWorld {
 		MIDNIGHT(18000);
 
 		private final int id;
-		private static final Map<Integer, DayTime> lookup = new HashMap<Integer, DayTime>();
+		private static final Map<Integer, DayTime> lookup = new HashMap<>();
 
 		private DayTime(int id) {
 			this.id = id;
@@ -138,7 +136,7 @@ public class DataWorld {
 		WORLD(2);
 		
 		private final int id;
-		private static final Map<Integer, RespawnLocation> lookup = new HashMap<Integer, RespawnLocation>();
+		private static final Map<Integer, RespawnLocation> lookup = new HashMap<>();
 		
 		private RespawnLocation(int id) {
 			this.id = id;
@@ -216,7 +214,7 @@ public class DataWorld {
 	}
 	
 	public Map<String, Object> toMap() {
-		Map<String, Object> values = new HashMap<String, Object>();
+		Map<String, Object> values = new HashMap<>();
 		values.put("name", name);
 		values.put("type", environment.toString());
 		values.put("generator", generator.toString());

@@ -1,11 +1,9 @@
 package de.xcraft.engelier.XcraftGate.Generator;
 
+import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.bukkit.generator.ChunkGenerator;
-
-import de.xcraft.engelier.XcraftGate.XcraftGate;
 
 public enum Generator {
     DEFAULT(0),
@@ -13,7 +11,7 @@ public enum Generator {
     VOID(2);
 
 	private final int id;
-	private static final Map<Integer, Generator> lookup = new HashMap<Integer, Generator>();
+	private static final Map<Integer, Generator> lookup = new HashMap<>();
 
 	private Generator(int id) {
 		this.id = id;

@@ -1,7 +1,6 @@
 package de.xcraft.engelier.XcraftGate.Generator;
 
 import java.util.Random;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

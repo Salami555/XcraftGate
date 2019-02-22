@@ -1,22 +1,20 @@
 package de.xcraft.engelier.XcraftGate.Commands;
 
+import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.xcraft.engelier.XcraftGate.XcraftGate;
-
 public class CommandHandlerGate extends CommandHelper implements CommandExecutor {
-	private static Map<String, CommandHelperGate> subcommands = new HashMap<String, CommandHelperGate>();
-	private static Map<String, String> permNodes = new HashMap<String, String>();
+	private static Map<String, CommandHelperGate> subcommands = new HashMap<>();
+	private static Map<String, String> permNodes = new HashMap<>();
 
 	public CommandHandlerGate(XcraftGate instance) {
 		super(instance);
@@ -75,6 +73,7 @@ public class CommandHandlerGate extends CommandHelper implements CommandExecutor
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gate warp <name>");
 	}
 	
+    @Override
 	public boolean onCommand(CommandSender sender, Command cmd,	String commandLabel, String[] args) {
 		this.sender = sender;
 		player = (sender instanceof Player) ? (Player) sender : null;
@@ -102,7 +101,7 @@ public class CommandHandlerGate extends CommandHelper implements CommandExecutor
 			largs = largs.subList(1, largs.size());
 			String gateName = (largs.size() > 0 ? largs.get(0) : null);
 			
-			subcommands.get(args[0].toLowerCase()).execute(sender, gateName, (largs.size() > 1 ? largs.subList(1, largs.size()) : new ArrayList<String>()));
+			subcommands.get(args[0].toLowerCase()).execute(sender, gateName, (largs.size() > 1 ? largs.subList(1, largs.size()) : new ArrayList<>()));
 		}
 		
 		return true;

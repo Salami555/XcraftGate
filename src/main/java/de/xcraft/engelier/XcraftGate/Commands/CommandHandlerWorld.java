@@ -1,22 +1,20 @@
 package de.xcraft.engelier.XcraftGate.Commands;
 
+import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.xcraft.engelier.XcraftGate.XcraftGate;
-
 public class CommandHandlerWorld extends CommandHelper implements CommandExecutor {
-	private static Map<String, CommandHelperWorld> subcommands = new HashMap<String, CommandHelperWorld>();
-	private static Map<String, String> permNodes = new HashMap<String, String>();
+	private static Map<String, CommandHelperWorld> subcommands = new HashMap<>();
+	private static Map<String, String> permNodes = new HashMap<>();
 
 	public CommandHandlerWorld(XcraftGate instance) {
 		super(instance);
@@ -143,10 +141,9 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
 			List<String> largs = Arrays.asList(args);
 			largs = largs.subList(1, largs.size());
 			
-			subcommands.get(args[0].toLowerCase()).execute(
-					sender,
+			subcommands.get(args[0].toLowerCase()).execute(sender,
 					(largs.size() > 0 ? largs.get(0) : null),
-					(largs.size() > 1 ? largs.subList(1, largs.size()) : new ArrayList<String>())
+					(largs.size() > 1 ? largs.subList(1, largs.size()) : new ArrayList<>())
 					);
 		}
 		

@@ -3,7 +3,6 @@ package de.xcraft.engelier.XcraftGate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.bukkit.Location;
 
 public class Util {
@@ -89,7 +88,7 @@ public class Util {
 	}
 	
 	public static String joinInteger(Integer[] array, String seperator) {
-		List<String> stringlist = new ArrayList<String>();
+		List<String> stringlist = new ArrayList<>();
 		
 		for (Integer value : array) {
 			stringlist.add("" + value);

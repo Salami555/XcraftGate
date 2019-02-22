@@ -1,7 +1,6 @@
 package de.xcraft.engelier.XcraftGate;
 
 import java.io.IOException;
-
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

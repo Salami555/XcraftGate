@@ -7,7 +7,6 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.permissions.Permission;
@@ -17,8 +16,8 @@ import org.yaml.snakeyaml.Yaml;
 
 public class SetGate implements Iterable<DataGate> {
 	private static XcraftGate plugin;
-	private Map<String, DataGate> gates = new HashMap<String, DataGate>();
-	private Map<String, String> gateLocations = new HashMap<String, String>();
+	private Map<String, DataGate> gates = new HashMap<>();
+	private Map<String, String> gateLocations = new HashMap<>();
 	
 	public SetGate (XcraftGate plugin) {
 		SetGate.plugin = plugin;
@@ -84,7 +83,7 @@ public class SetGate implements Iterable<DataGate> {
 	public void save() {
 		File configFile = plugin.getConfigFile("gates.yml");
 
-		Map<String, Object> toDump = new HashMap<String, Object>();
+		Map<String, Object> toDump = new HashMap<>();
 
 		for (DataGate thisGate : gates.values()) {
 			toDump.put(thisGate.getName(), thisGate.toMap());
@@ -93,11 +92,9 @@ public class SetGate implements Iterable<DataGate> {
 		Yaml yaml = new Yaml();
 		String dump = yaml.dump(toDump);
 		
-		try {
-			FileOutputStream fh = new FileOutputStream(configFile);
+		try (FileOutputStream fh = new FileOutputStream(configFile)) {
 			new PrintStream(fh).println(dump);
 			fh.flush();
-			fh.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -172,7 +169,7 @@ public class SetGate implements Iterable<DataGate> {
 
 		String descr = "Permission to use all gates";
 		
-		Map<String, Boolean> children = new HashMap<String, Boolean>();
+		Map<String, Boolean> children = new HashMap<>();
 		
 		for (String name : gates.keySet()) {
 			children.put("XcraftGate.use." + name, true);

@@ -1,12 +1,10 @@
 package de.xcraft.engelier.XcraftGate.Commands;
 
+import de.xcraft.engelier.XcraftGate.DataGate;
+import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-
-import de.xcraft.engelier.XcraftGate.XcraftGate;
-import de.xcraft.engelier.XcraftGate.DataGate;
 
 public abstract class CommandHelperGate extends CommandHelper {
 	public CommandHelperGate(XcraftGate plugin) {

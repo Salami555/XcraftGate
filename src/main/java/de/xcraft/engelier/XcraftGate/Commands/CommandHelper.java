@@ -1,10 +1,9 @@
 package de.xcraft.engelier.XcraftGate.Commands;
 
+import de.xcraft.engelier.XcraftGate.XcraftGate;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import de.xcraft.engelier.XcraftGate.XcraftGate;
 
 public abstract class CommandHelper {
 	protected XcraftGate plugin = null;

@@ -1,5 +1,8 @@
 package de.xcraft.engelier.XcraftGate;
 
+import de.xcraft.engelier.XcraftGate.DataWorld.RespawnLocation;
+import de.xcraft.engelier.XcraftGate.DataWorld.Weather;
+import de.xcraft.engelier.XcraftGate.Generator.Generator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,18 +10,13 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.yaml.snakeyaml.Yaml;
 
-import de.xcraft.engelier.XcraftGate.DataWorld.RespawnLocation;
-import de.xcraft.engelier.XcraftGate.DataWorld.Weather;
-import de.xcraft.engelier.XcraftGate.Generator.Generator;
-
 public class SetWorld implements Iterable<DataWorld> {
 	private static XcraftGate plugin;
-	private Map<String, DataWorld> worlds = new HashMap<String, DataWorld>();
+	private Map<String, DataWorld> worlds = new HashMap<>();
 	
 	public SetWorld (XcraftGate plugin) {
 		SetWorld.plugin = plugin;
@@ -112,7 +110,7 @@ public class SetWorld implements Iterable<DataWorld> {
 	public void save() {
 		File configFile = plugin.getConfigFile("worlds.yml");
 		
-		Map<String, Object> toDump = new HashMap<String, Object>();
+		Map<String, Object> toDump = new HashMap<>();
 
 		for (DataWorld thisWorld : worlds.values()) {
 			toDump.put(thisWorld.getName(), thisWorld.toMap());
@@ -121,11 +119,9 @@ public class SetWorld implements Iterable<DataWorld> {
 		Yaml yaml = new Yaml();
 		String dump = yaml.dump(toDump);
 
-		try {
-			FileOutputStream fh = new FileOutputStream(configFile);
+		try (FileOutputStream fh = new FileOutputStream(configFile)) {
 			new PrintStream(fh).println(dump);
 			fh.flush();
-			fh.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

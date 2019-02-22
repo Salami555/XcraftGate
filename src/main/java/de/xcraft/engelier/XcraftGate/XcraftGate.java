@@ -1,5 +1,7 @@
 package de.xcraft.engelier.XcraftGate;
 
+import de.xcraft.engelier.XcraftGate.Commands.*;
+import de.xcraft.engelier.XcraftGate.Generator.Generator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -17,9 +18,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import de.xcraft.engelier.XcraftGate.Commands.*;
-import de.xcraft.engelier.XcraftGate.Generator.Generator;
 
 public class XcraftGate extends JavaPlugin {
 	private final ListenerServer pluginListener = new ListenerServer(this);
@@ -35,8 +33,8 @@ public class XcraftGate extends JavaPlugin {
 	private SetWorld worlds = new SetWorld(this);
 	private SetGate gates = new SetGate(this);
 	
-	public Map<String, Location> justTeleported = new HashMap<String, Location>();
-	public Map<String, Location> justTeleportedFrom = new HashMap<String, Location>();
+	public Map<String, Location> justTeleported = new HashMap<>();
+	public Map<String, Location> justTeleportedFrom = new HashMap<>();
 
 	public YamlConfiguration config = null;
 
@@ -44,6 +42,7 @@ public class XcraftGate extends JavaPlugin {
 	public final Properties serverconfig = new Properties(); 
 
 	class RunCreatureLimit implements Runnable {
+        @Override
 		public void run() {
 			for (DataWorld thisWorld: worlds) {
 				thisWorld.checkCreatureLimit();
@@ -52,6 +51,7 @@ public class XcraftGate extends JavaPlugin {
 	}
 	
 	class RunTimeFrozen implements Runnable {
+        @Override
 		public void run() {
 			for (DataWorld thisWorld: worlds) {
 				if (thisWorld.isTimeFrozen()) {
@@ -96,11 +96,13 @@ public class XcraftGate extends JavaPlugin {
 		worlds.save();		
 	}
 	
+    @Override
 	public void onDisable() {
 		getServer().getScheduler().cancelTasks(this);
 		saveAll();
 	}
 
+    @Override
 	public void onEnable() {
 		playerListener.loadPlayers();
 		inventoryManager.load();
@@ -140,6 +142,7 @@ public class XcraftGate extends JavaPlugin {
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new RunCreatureLimit(), 600, 600);
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new RunTimeFrozen(), 200, 200);
 		getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+            @Override
 			public void run() {
 				saveAll();
 			}
@@ -263,6 +266,7 @@ public class XcraftGate extends JavaPlugin {
 		config.save(getConfigFile("config.yml"));
 	}
 
+    @Override
 	public boolean onCommand(CommandSender sender, Command cmd,	String commandLabel, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("gate")) {
 			getCommand("gate").setExecutor(new CommandHandlerGate(this));
@@ -293,6 +297,7 @@ public class XcraftGate extends JavaPlugin {
 		return pm;
 	}
 	
+    @Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
 		for (Generator thisGen : Generator.values()) {
 			if (thisGen.toString().equalsIgnoreCase(id)) {
