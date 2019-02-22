@@ -23,7 +23,7 @@ public class ListenerWorld implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onWorldUnload(WorldUnloadEvent event) {
 		World world = event.getWorld();
-		plugin.log.info(plugin.getNameBrackets() + "trying to unload world " + world.getName());
+		plugin.getLogger().info(plugin.getNameBrackets() + "trying to unload world " + world.getName());
 		// this is never called?!
 	}
 }

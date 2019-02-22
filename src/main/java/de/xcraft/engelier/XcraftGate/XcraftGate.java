@@ -38,7 +38,6 @@ public class XcraftGate extends JavaPlugin {
 
 	public YamlConfiguration config = null;
 
-	public final Logger log = Logger.getLogger("Minecraft");
 	public final Properties serverconfig = new Properties(); 
 
 	class RunCreatureLimit implements Runnable {
@@ -66,7 +65,7 @@ public class XcraftGate extends JavaPlugin {
 		public void run() {
 			for (World thisWorld : getServer().getWorlds()) {
 				if (worlds.get(thisWorld).checkInactive() && !thisWorld.getName().equalsIgnoreCase(serverconfig.getProperty("level-name"))) {
-					log.info(getNameBrackets() + "World '" + thisWorld.getName() + "' inactive. Unloading.");
+					getLogger().info(getNameBrackets() + "World '" + thisWorld.getName() + "' inactive. Unloading.");
 					
 					worlds.get(thisWorld).unload();
 				}
@@ -120,12 +119,12 @@ public class XcraftGate extends JavaPlugin {
 		
 		File serverconfigFile = new File("server.properties");
 		if (!serverconfigFile.exists()) {
-			log.severe(getNameBrackets() + "unable to load server.properties.");
+			getLogger().severe(getNameBrackets() + "unable to load server.properties.");
 		} else {
 			try {
 				serverconfig.load(new FileInputStream(serverconfigFile));
 			} catch (Exception ex) {
-				log.severe(getNameBrackets() + "error loading " + serverconfigFile);
+				getLogger().severe(getNameBrackets() + "error loading " + serverconfigFile);
 				ex.printStackTrace();
 			}
 		}
@@ -159,7 +158,7 @@ public class XcraftGate extends JavaPlugin {
 			getCommand("gate").setExecutor(new CommandHandlerGate(this));
 			getCommand("gworld").setExecutor(new CommandHandlerWorld(this));
 		} catch (Exception ex) {
-			log.warning(getNameBrackets() + "getCommand().setExecutor() failed! Seems I got enabled by another plugin. Nag the bukkit team about this!");
+			getLogger().warning(getNameBrackets() + "getCommand().setExecutor() failed! Seems I got enabled by another plugin. Nag the bukkit team about this!");
 		}
 	}
 	

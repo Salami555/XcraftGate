@@ -39,18 +39,18 @@ public class PluginManager implements Runnable {
 		Plugin vaultCheck = pm.getPlugin("Vault");
 		if (vaultCheck != null && vaultCheck.isEnabled()) {
 			vault = vaultCheck;
-			core.log.info(core.getNameBrackets() + "found Vault plugin.");
+			core.getLogger().info(core.getNameBrackets() + "found Vault plugin.");
 			
 	        RegisteredServiceProvider<Permission> permissionProvider = core.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 	        if (permissionProvider != null) {
 	            permission = permissionProvider.getProvider();
-	            core.log.info(core.getNameBrackets() + "Reported permission provider: " + permission.getName());
+	            core.getLogger().info(core.getNameBrackets() + "Reported permission provider: " + permission.getName());
 	        }
 
 	        RegisteredServiceProvider<Economy> economyProvider = core.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 	        if (economyProvider != null) {
 	            economy = economyProvider.getProvider();
-	            core.log.info(core.getNameBrackets() + "Reported economy provider: " + economy.getName());
+	            core.getLogger().info(core.getNameBrackets() + "Reported economy provider: " + economy.getName());
 	        }
 
 		}
@@ -61,7 +61,7 @@ public class PluginManager implements Runnable {
 			permission = null;
 			economy = null;
 			vault = null;
-			core.log.info(core.getNameBrackets() + "lost Vault plugin");
+			core.getLogger().info(core.getNameBrackets() + "lost Vault plugin");
 		}
 
 	}

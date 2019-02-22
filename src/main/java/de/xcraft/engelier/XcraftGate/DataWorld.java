@@ -183,12 +183,12 @@ public class DataWorld {
 		
 		lastAction = System.currentTimeMillis();
 
-		plugin.log.info(plugin.getNameBrackets() + "loaded world " + name + " (Environment: " + environment.toString() + ", Seed: " + world.getSeed() + ", Generator: " + generator.toString() + ")");
+		plugin.getLogger().info(plugin.getNameBrackets() + "loaded world " + name + " (Environment: " + environment.toString() + ", Seed: " + world.getSeed() + ", Generator: " + generator.toString() + ")");
 	}
 	
 	public void unload() {
 		server.unloadWorld(world, true);
-		plugin.log.info(plugin.getNameBrackets() + "unloaded world " + world.getName());
+		plugin.getLogger().info(plugin.getNameBrackets() + "unloaded world " + world.getName());
 		this.world = null;
 	}
 	

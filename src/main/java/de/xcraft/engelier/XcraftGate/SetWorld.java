@@ -34,7 +34,7 @@ public class SetWorld implements Iterable<DataWorld> {
 			DataWorld newWorld;
 			
 			if (worldsYaml == null) {
-				plugin.log.info(plugin.getNameBrackets() + "empty worlds.yml - initializing");
+				plugin.getLogger().info(plugin.getNameBrackets() + "empty worlds.yml - initializing");
 				return;
 			}
 			
@@ -104,7 +104,7 @@ public class SetWorld implements Iterable<DataWorld> {
 			ex.printStackTrace();
 		}		
 		
-		plugin.log.info(plugin.getNameBrackets() + "loaded " + counter + " world configurations");
+		plugin.getLogger().info(plugin.getNameBrackets() + "loaded " + counter + " world configurations");
 	}
 
 	public void save() {
@@ -129,11 +129,11 @@ public class SetWorld implements Iterable<DataWorld> {
 	
 	public void onWorldLoad(final World world) {
 		if (worlds.get(world.getName()) != null) {
-			plugin.log.info(plugin.getNameBrackets() + "World '" + world.getName() + "' loading. Applying config.");
+			plugin.getLogger().info(plugin.getNameBrackets() + "World '" + world.getName() + "' loading. Applying config.");
 			get(world).setWorld(world);
 			get(world).setParameters();					
 		} else {
-			plugin.log.info(plugin.getNameBrackets() + "World '" + world.getName() + "' detected. Adding to config.");
+			plugin.getLogger().info(plugin.getNameBrackets() + "World '" + world.getName() + "' detected. Adding to config.");
 			DataWorld newWorld = new DataWorld(plugin, world.getName(), world.getEnvironment());
 			add(newWorld);
 			save();

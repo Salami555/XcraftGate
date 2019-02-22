@@ -34,7 +34,7 @@ public class SetGate implements Iterable<DataGate> {
 			Map<String, Object> gatesYaml = (Map<String, Object>) yaml.load(new FileInputStream(configFile));
 			
 			if (gatesYaml == null) {
-				plugin.log.info(plugin.getNameBrackets() + "empty gates.yml - initializing");
+				plugin.getLogger().info(plugin.getNameBrackets() + "empty gates.yml - initializing");
 				return;
 			}
 			
@@ -66,7 +66,7 @@ public class SetGate implements Iterable<DataGate> {
 					DataGate thisTarget = get((String) gateData.get("target"));
 					
 					if (thisTarget == null) {
-						plugin.log.warning(plugin.getNameBrackets() + "ignored invalid destination for gate " + gateName);
+						plugin.getLogger().warning(plugin.getNameBrackets() + "ignored invalid destination for gate " + gateName);
 					} else {
 						get(gateName).linkTo(thisTarget, false);
 					}
@@ -77,7 +77,7 @@ public class SetGate implements Iterable<DataGate> {
 			ex.printStackTrace();
 		}
 
-		plugin.log.info(plugin.getNameBrackets() + "loaded " + counter + " gates");
+		plugin.getLogger().info(plugin.getNameBrackets() + "loaded " + counter + " gates");
 	}
 
 	public void save() {
@@ -193,7 +193,7 @@ public class SetGate implements Iterable<DataGate> {
 			}
 		}
 		
-		plugin.log.info(plugin.getNameBrackets() + "loaded " + gateCounter + " gates for world '" + world.getName() + "'");
+		plugin.getLogger().info(plugin.getNameBrackets() + "loaded " + gateCounter + " gates for world '" + world.getName() + "'");
 	}
 	
 	public void onWorldUnload(World world) {
