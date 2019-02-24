@@ -8,6 +8,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 public class PluginManager {
+
     private final XcraftGate core;
     private final org.bukkit.plugin.PluginManager pm;
 
@@ -34,8 +35,9 @@ public class PluginManager {
     }
 
     public void checkPluginVault() {
-		if (vault != null)
+        if (vault != null) {
             return;
+        }
 
         Plugin vaultCheck = pm.getPlugin("Vault");
         if (vaultCheck != null && vaultCheck.isEnabled()) {

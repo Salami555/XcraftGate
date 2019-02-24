@@ -5,15 +5,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class ListenerCreature implements Listener {
-	private final XcraftGate plugin;
 
-	public ListenerCreature(XcraftGate instance) {
-		plugin = instance;
-	}
+    private final XcraftGate plugin;
 
-	@EventHandler
-	public void onCreatureSpawn(CreatureSpawnEvent event) {
-		if (plugin.getWorlds().get(event.getLocation().getWorld()) != null)
-			plugin.getWorlds().get(event.getLocation().getWorld()).checkCreatureLimit();
-	}
+    public ListenerCreature(XcraftGate instance) {
+        plugin = instance;
+    }
+
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (plugin.getWorlds().get(event.getLocation().getWorld()) != null) {
+            plugin.getWorlds().get(event.getLocation().getWorld()).checkCreatureLimit();
+        }
+    }
 }

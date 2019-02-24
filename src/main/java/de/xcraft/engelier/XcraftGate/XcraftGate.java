@@ -4,7 +4,6 @@ import de.xcraft.engelier.XcraftGate.Commands.*;
 import de.xcraft.engelier.XcraftGate.Generator.Generator;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,7 @@ import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class XcraftGate extends JavaPlugin {
-
+    
     private final ListenerServer pluginListener = new ListenerServer(this);
     private final ListenerPlayer playerListener = new ListenerPlayer(this);
     private final ListenerCreature creatureListener = new ListenerCreature(this);
@@ -30,27 +29,27 @@ public class XcraftGate extends JavaPlugin {
     private final ListenerWeather weatherListener = new ListenerWeather(this);
     private final ListenerWorld worldListener = new ListenerWorld(this);
     private final InventoryManager inventoryManager = new InventoryManager(this);
-
+    
     private PluginManager pm = null;
-
+    
     private final SetWorld worlds = new SetWorld(this);
     private final SetGate gates = new SetGate(this);
-
+    
     public Map<String, Location> justTeleported = new HashMap<>();
     public Map<String, Location> justTeleportedFrom = new HashMap<>();
-
+    
     public YamlConfiguration config = null;
-
+    
     public final Properties serverconfig = new Properties();
-
+    
     private String aboutPluginString = null;
-
+    
     public void taskCreatureLimit() {
         for (DataWorld thisWorld : worlds) {
             thisWorld.checkCreatureLimit();
         }
     }
-
+    
     public void taskTimeFrozen() {
         for (DataWorld thisWorld : worlds) {
             if (thisWorld.isTimeFrozen()) {
@@ -58,56 +57,56 @@ public class XcraftGate extends JavaPlugin {
             }
         }
     }
-
+    
     public void taskCheckWorldInactive() {
         for (World thisWorld : getServer().getWorlds()) {
             if (worlds.get(thisWorld).checkInactive() && !thisWorld.getName().equalsIgnoreCase(serverconfig.getProperty("level-name"))) {
                 getLogger().log(Level.INFO, "World '{0}' inactive. Unloading.", thisWorld.getName());
-
+                
                 worlds.get(thisWorld).unload();
             }
         }
     }
-
+    
     public void taskLoadAllWorlds() {
         for (World thisWorld : getServer().getWorlds()) {
             worlds.onWorldLoad(thisWorld);
         }
-
+        
         for (DataWorld thisWorld : worlds) {
             if (!thisWorld.isLoaded() && (config.getBoolean("dynworld.enabled", false) == false || thisWorld.isSticky())) {
                 thisWorld.load();
             }
         }
     }
-
+    
     public void saveAll() {
         playerListener.savePlayers();
         inventoryManager.save();
         gates.save();
         worlds.save();
     }
-
+    
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
         saveAll();
     }
-
+    
     @Override
     public void onEnable() {
         playerListener.loadPlayers();
         inventoryManager.load();
-
+        
         pm = new PluginManager(this);
-
+        
         pm.registerEvents(creatureListener);
         pm.registerEvents(entityListener);
         pm.registerEvents(playerListener);
         pm.registerEvents(pluginListener);
         pm.registerEvents(weatherListener);
         pm.registerEvents(worldListener);
-
+        
         File serverconfigFile = new File("server.properties");
         if (!serverconfigFile.exists()) {
             getLogger().log(Level.SEVERE, "Missing server.properties");
@@ -118,7 +117,7 @@ public class XcraftGate extends JavaPlugin {
                 getLogger().log(Level.SEVERE, "Error loading server config file: {0}", serverconfigFile);
             }
         }
-
+        
         config = getConfig(getConfigFile("config.yml"));
         try {
             setConfigDefaults();
@@ -127,31 +126,31 @@ public class XcraftGate extends JavaPlugin {
         }
         worlds.load();
         gates.load();
-
+        
         getServer().getScheduler().scheduleSyncRepeatingTask(this, this::taskCreatureLimit, 600, 600);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, this::taskTimeFrozen, 200, 200);
         getServer().getScheduler().runTaskTimerAsynchronously(this, this::saveAll, 12000, 12000);
-
+        
         if (config.getBoolean("dynworld.enabled", false)) {
             getServer().getScheduler().scheduleSyncRepeatingTask(this, this::taskCheckWorldInactive, config.getInt("dynworld.checkInterval", 60) * 20, config.getInt("dynworld.checkInterval", 60) * 20);
         }
-
+        
         getServer().getScheduler().scheduleSyncDelayedTask(this, this::taskLoadAllWorlds);
         getServer().getScheduler().scheduleSyncDelayedTask(this, pm::checkPluginVault);
-
+        
         getCommand("gate").setExecutor(new CommandHandlerGate(this));
         getCommand("gworld").setExecutor(new CommandHandlerWorld(this));
     }
-
+    
     @Override
     public YamlConfiguration getConfig() {
         return config;
     }
-
+    
     public YamlConfiguration getConfig(String fileName) {
         return getConfig(getConfigFile(fileName));
     }
-
+    
     public YamlConfiguration getConfig(File file) {
         YamlConfiguration ret = new YamlConfiguration();
         try {
@@ -159,39 +158,39 @@ public class XcraftGate extends JavaPlugin {
         } catch (IOException | InvalidConfigurationException e) {
             getLogger().log(Level.SEVERE, "Loading config file failed", e);
         }
-
+        
         return ret;
     }
-
+    
     public File getConfigFile(String fileName) {
         File configFile = new File(getDataFolder(), fileName);
-
+        
         if (!configFile.exists()) {
             try {
                 getDataFolder().mkdir();
                 getDataFolder().setWritable(true);
-
+                
                 configFile.createNewFile();
             } catch (IOException ex) {
                 getLogger().log(Level.SEVERE, "Creating config file failed", ex);
             }
         }
-
+        
         return configFile;
     }
-
+    
     private void setConfigDefaults() throws IOException {
         config.addDefault("dynworld.enabled", true);
         config.addDefault("dynworld.checkInterval", 60);
         config.addDefault("dynworld.maxInactiveTime", 300);
-
+        
         config.addDefault("invsep.enabled", true);
         config.addDefault("invsep.exp", true);
         config.addDefault("invsep.health", true);
         config.addDefault("invsep.food", true);
-
+        
         config.addDefault("fixes.chunkRefreshOnTeleport", false);
-
+        
         config.addDefault("biomes.desert.chanceCactus", 1);
         config.addDefault("biomes.desert.chanceDeadShrub", 2);
         config.addDefault("biomes.forest.chanceLakeWater", 1);
@@ -235,12 +234,12 @@ public class XcraftGate extends JavaPlugin {
         config.addDefault("biomes.taiga.chanceTreeRedwood", 4);
         config.addDefault("biomes.taiga.chanceGrassTall", 2);
         config.addDefault("biomes.tundra.chanceLakeWater", 1);
-
+        
         getLogger().info("Saving default config.");
         config.options().copyDefaults();
         config.save(getConfigFile("config.yml"));
     }
-
+    
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (cmd.getName().equalsIgnoreCase("gate")) {
@@ -255,7 +254,7 @@ public class XcraftGate extends JavaPlugin {
             return false;
         }
     }
-
+    
     public String getPluginAbout() {
         if (aboutPluginString == null) {
             aboutPluginString = new StringBuilder()
@@ -269,23 +268,23 @@ public class XcraftGate extends JavaPlugin {
         }
         return aboutPluginString;
     }
-
+    
     public String getNameBrackets() {
         return "[" + this.getDescription().getFullName() + "] ";
     }
-
+    
     public SetWorld getWorlds() {
         return worlds;
     }
-
+    
     public SetGate getGates() {
         return gates;
     }
-
+    
     public PluginManager getPluginManager() {
         return pm;
     }
-
+    
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
         for (Generator thisGen : Generator.values()) {
@@ -293,7 +292,7 @@ public class XcraftGate extends JavaPlugin {
                 return thisGen.getChunkGenerator(this);
             }
         }
-
+        
         return null;
     }
 }

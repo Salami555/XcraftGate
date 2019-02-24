@@ -17,214 +17,219 @@ import org.bukkit.plugin.PluginManager;
 import org.yaml.snakeyaml.Yaml;
 
 public class SetGate implements Iterable<DataGate> {
-	private static XcraftGate plugin;
-	private final Map<String, DataGate> gates = new HashMap<>();
-	private final Map<String, String> gateLocations = new HashMap<>();
-	
-	public SetGate (XcraftGate plugin) {
-		SetGate.plugin = plugin;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void load() {
-		File configFile = plugin.getConfigFile("gates.yml");
-		
-		int counter = 0;
 
-		try {
-			Yaml yaml = new Yaml();
-			Map<String, Object> gatesYaml = (Map<String, Object>) yaml.load(new FileInputStream(configFile));
-			
-			if (gatesYaml == null) {
-				plugin.getLogger().info("Empty gates.yml - initializing");
-				return;
-			}
-			
-			for (Map.Entry<String, Object> thisGate : gatesYaml.entrySet()) {
-				String gateName = thisGate.getKey();
-				Map<String, Object> gateData = (Map<String, Object>) thisGate.getValue();
+    private static XcraftGate plugin;
+    private final Map<String, DataGate> gates = new HashMap<>();
+    private final Map<String, String> gateLocations = new HashMap<>();
 
-				DataGate newGate = new DataGate(plugin, gateName);
-				newGate.setLocation(
-						(String) gateData.get("world"),
-						(Double) gateData.get("locX"),
-						(Double) gateData.get("locY"),
-						(Double) gateData.get("locZ"),
-						((Double) gateData.get("locYaw")).floatValue(),
-						((Double) gateData.get("locP")).floatValue());
+    public SetGate(XcraftGate plugin) {
+        SetGate.plugin = plugin;
+    }
 
-				newGate.setToll((Double) gateData.get("toll"));
-				newGate.setDenySilent((Boolean) gateData.get("denysilent"));
+    @SuppressWarnings("unchecked")
+    public void load() {
+        File configFile = plugin.getConfigFile("gates.yml");
 
-				add(newGate);
-				counter++;
-			}
+        int counter = 0;
 
-			for (Map.Entry<String, Object> thisGate : gatesYaml.entrySet()) {
-				String gateName = thisGate.getKey();
-				Map<String, Object> gateData = (Map<String, Object>) thisGate.getValue();
+        try {
+            Yaml yaml = new Yaml();
+            Map<String, Object> gatesYaml = (Map<String, Object>) yaml.load(new FileInputStream(configFile));
 
-				if (gateData.get("target") != null) {
-					DataGate thisTarget = get((String) gateData.get("target"));
-					
-					if (thisTarget == null) {
-						plugin.getLogger().log(Level.WARNING, "Ignored invalid destination for gate {0}", gateName);
-					} else {
-						get(gateName).linkTo(thisTarget, false);
-					}
-				}
-			}
+            if (gatesYaml == null) {
+                plugin.getLogger().info("Empty gates.yml - initializing");
+                return;
+            }
 
-		} catch (IOException ex) {
+            for (Map.Entry<String, Object> thisGate : gatesYaml.entrySet()) {
+                String gateName = thisGate.getKey();
+                Map<String, Object> gateData = (Map<String, Object>) thisGate.getValue();
+
+                DataGate newGate = new DataGate(plugin, gateName);
+                newGate.setLocation(
+                        (String) gateData.get("world"),
+                        (Double) gateData.get("locX"),
+                        (Double) gateData.get("locY"),
+                        (Double) gateData.get("locZ"),
+                        ((Double) gateData.get("locYaw")).floatValue(),
+                        ((Double) gateData.get("locP")).floatValue());
+
+                newGate.setToll((Double) gateData.get("toll"));
+                newGate.setDenySilent((Boolean) gateData.get("denysilent"));
+
+                add(newGate);
+                counter++;
+            }
+
+            for (Map.Entry<String, Object> thisGate : gatesYaml.entrySet()) {
+                String gateName = thisGate.getKey();
+                Map<String, Object> gateData = (Map<String, Object>) thisGate.getValue();
+
+                if (gateData.get("target") != null) {
+                    DataGate thisTarget = get((String) gateData.get("target"));
+
+                    if (thisTarget == null) {
+                        plugin.getLogger().log(Level.WARNING, "Ignored invalid destination for gate {0}", gateName);
+                    } else {
+                        get(gateName).linkTo(thisTarget, false);
+                    }
+                }
+            }
+
+        } catch (IOException ex) {
             plugin.getLogger().log(Level.WARNING, "Loading gates data failed", ex);
-		}
+        }
 
-		plugin.getLogger().log(Level.INFO, "Loaded {0} gates", counter);
-	}
+        plugin.getLogger().log(Level.INFO, "Loaded {0} gates", counter);
+    }
 
-	public void save() {
-		File configFile = plugin.getConfigFile("gates.yml");
+    public void save() {
+        File configFile = plugin.getConfigFile("gates.yml");
 
-		Map<String, Object> toDump = new HashMap<>();
+        Map<String, Object> toDump = new HashMap<>();
 
-		for (DataGate thisGate : gates.values()) {
-			toDump.put(thisGate.getName(), thisGate.toMap());
-		}
+        for (DataGate thisGate : gates.values()) {
+            toDump.put(thisGate.getName(), thisGate.toMap());
+        }
 
-		Yaml yaml = new Yaml();
-		String dump = yaml.dump(toDump);
-		
-		try (FileOutputStream fh = new FileOutputStream(configFile)) {
-			new PrintStream(fh).println(dump);
-			fh.flush();
-		} catch (IOException ex) {
+        Yaml yaml = new Yaml();
+        String dump = yaml.dump(toDump);
+
+        try (FileOutputStream fh = new FileOutputStream(configFile)) {
+            new PrintStream(fh).println(dump);
+            fh.flush();
+        } catch (IOException ex) {
             plugin.getLogger().log(Level.WARNING, "Saving gates data failed", ex);
-		}
-	}
+        }
+    }
 
-	public void reload() {
-		gates.clear();
-		gateLocations.clear();
-		load();
-		
-		for (DataGate thisGate : gates.values()) {
-			if (plugin.getServer().getWorld(thisGate.getWorldName()) != null) {
-				gateLocations.put(Util.getLocationString(thisGate.getLocation()), thisGate.getName());
-			}
-		}
-	}
-	
-	public void add(DataGate gate) {
-		add(gate, false);
-	}
-	
-	public void add(DataGate gate, boolean save) {
-		gates.put(gate.getName(), gate);
-		if (gate.getLocation() != null) {
-			gateLocations.put(Util.getLocationString(gate.getLocation()), gate.getName());
-		}
-		
-		resetSuperPermission(gate.getName());
-		if (save) save();
-	}
+    public void reload() {
+        gates.clear();
+        gateLocations.clear();
+        load();
 
-	public void remove(String gateName) {
-		remove(get(gateName));
-	}
-	
-	public void remove(DataGate gate) {
-		gates.remove(gate.getName());
-		
-		if (plugin.getWorlds().get(gate.getWorldName()).isLoaded()) {
-			gateLocations.remove(Util.getLocationString(gate.getLocation()));
-		}
-		
-		save();
-	}
-	
-	public boolean has(String name) {
-		return gates.containsKey(name);
-	}
-	
-	public DataGate get(String gateName) {
-		return gates.get(gateName);
-	}
-	
-	public DataGate getByLocation(Location loc) {
-		String gateName = gateLocations.get(Util.getLocationString(loc));
-		return get(gateName);
-	}
-	
-	public void resetSuperPermission(String gatePerm) {
-		PluginManager pm = plugin.getServer().getPluginManager();
-		gatePerm = "XcraftGate.use." + gatePerm;
-		
-		if (pm.getPermission(gatePerm) == null) {
-			pm.addPermission(new Permission(gatePerm, PermissionDefault.TRUE));
-		}
-		
-		Permission superPerm = pm.getPermission("XcraftGate.use.*");
-		if (superPerm != null) {
-			if (superPerm.getChildren().containsKey(gatePerm)) return;
-			pm.removePermission("xcraftgate.use.*");	
-		}
+        for (DataGate thisGate : gates.values()) {
+            if (plugin.getServer().getWorld(thisGate.getWorldName()) != null) {
+                gateLocations.put(Util.getLocationString(thisGate.getLocation()), thisGate.getName());
+            }
+        }
+    }
 
-		String descr = "Permission to use all gates";
-		
-		Map<String, Boolean> children = new HashMap<>();
-		
-		for (String name : gates.keySet()) {
-			children.put("XcraftGate.use." + name, true);
-		}
-		
-		superPerm = new Permission("XcraftGate.use.*", descr, (superPerm != null ? superPerm.getDefault() : PermissionDefault.TRUE), children);
-		pm.addPermission(superPerm);
-	}
-	
-	public void onWorldLoad(World world) {
-		onWorldLoad(plugin.getWorlds().get(world));
-	}
-	
-	public void onWorldLoad(DataWorld world) {
-		int gateCounter = 0;
-		
-		for (DataGate thisGate : gates.values()) {
-			if (thisGate.getWorldName().equalsIgnoreCase(world.getName())) {
-				gateLocations.put(Util.getLocationString(thisGate.getLocation()), thisGate.getName());
-				gateCounter++;
-			}
-		}
-		
-		plugin.getLogger().log(Level.INFO, "Loaded {0} gates for world '{1}'", new Object[]{gateCounter, world.getName()});
-	}
-	
-	public void onWorldUnload(World world) {
-		plugin.getWorlds().get(world);
-	}
-	
-	public void onWorldUnload(DataWorld world) {
-		for (DataGate thisGate : gates.values()) {
-			if (thisGate.getWorldName().equalsIgnoreCase(world.getName())) {
-				gateLocations.remove(Util.getLocationString(thisGate.getLocation()));
-			}
-		}		
-	}
-	
-	public int size() {
-		return gates.size();
-	}
-	
-	public Object[] toArray() {
-		return gates.values().toArray();
-	}
-	
-	public Object[] namesArray() {
-		return gates.keySet().toArray();
-	}
-	
-	@Override
-	public Iterator<DataGate> iterator() {
-		return gates.values().iterator();
-	}
+    public void add(DataGate gate) {
+        add(gate, false);
+    }
+
+    public void add(DataGate gate, boolean save) {
+        gates.put(gate.getName(), gate);
+        if (gate.getLocation() != null) {
+            gateLocations.put(Util.getLocationString(gate.getLocation()), gate.getName());
+        }
+
+        resetSuperPermission(gate.getName());
+        if (save) {
+            save();
+        }
+    }
+
+    public void remove(String gateName) {
+        remove(get(gateName));
+    }
+
+    public void remove(DataGate gate) {
+        gates.remove(gate.getName());
+
+        if (plugin.getWorlds().get(gate.getWorldName()).isLoaded()) {
+            gateLocations.remove(Util.getLocationString(gate.getLocation()));
+        }
+
+        save();
+    }
+
+    public boolean has(String name) {
+        return gates.containsKey(name);
+    }
+
+    public DataGate get(String gateName) {
+        return gates.get(gateName);
+    }
+
+    public DataGate getByLocation(Location loc) {
+        String gateName = gateLocations.get(Util.getLocationString(loc));
+        return get(gateName);
+    }
+
+    public void resetSuperPermission(String gatePerm) {
+        PluginManager pm = plugin.getServer().getPluginManager();
+        gatePerm = "XcraftGate.use." + gatePerm;
+
+        if (pm.getPermission(gatePerm) == null) {
+            pm.addPermission(new Permission(gatePerm, PermissionDefault.TRUE));
+        }
+
+        Permission superPerm = pm.getPermission("XcraftGate.use.*");
+        if (superPerm != null) {
+            if (superPerm.getChildren().containsKey(gatePerm)) {
+                return;
+            }
+            pm.removePermission("xcraftgate.use.*");
+        }
+
+        String descr = "Permission to use all gates";
+
+        Map<String, Boolean> children = new HashMap<>();
+
+        for (String name : gates.keySet()) {
+            children.put("XcraftGate.use." + name, true);
+        }
+
+        superPerm = new Permission("XcraftGate.use.*", descr, (superPerm != null ? superPerm.getDefault() : PermissionDefault.TRUE), children);
+        pm.addPermission(superPerm);
+    }
+
+    public void onWorldLoad(World world) {
+        onWorldLoad(plugin.getWorlds().get(world));
+    }
+
+    public void onWorldLoad(DataWorld world) {
+        int gateCounter = 0;
+
+        for (DataGate thisGate : gates.values()) {
+            if (thisGate.getWorldName().equalsIgnoreCase(world.getName())) {
+                gateLocations.put(Util.getLocationString(thisGate.getLocation()), thisGate.getName());
+                gateCounter++;
+            }
+        }
+
+        plugin.getLogger().log(Level.INFO, "Loaded {0} gates for world '{1}'", new Object[]{gateCounter, world.getName()});
+    }
+
+    public void onWorldUnload(World world) {
+        plugin.getWorlds().get(world);
+    }
+
+    public void onWorldUnload(DataWorld world) {
+        for (DataGate thisGate : gates.values()) {
+            if (thisGate.getWorldName().equalsIgnoreCase(world.getName())) {
+                gateLocations.remove(Util.getLocationString(thisGate.getLocation()));
+            }
+        }
+    }
+
+    public int size() {
+        return gates.size();
+    }
+
+    public Object[] toArray() {
+        return gates.values().toArray();
+    }
+
+    public Object[] namesArray() {
+        return gates.keySet().toArray();
+    }
+
+    @Override
+    public Iterator<DataGate> iterator() {
+        return gates.values().iterator();
+    }
 
 }
