@@ -22,7 +22,7 @@ public class CommandGateListnear extends CommandHelperGate {
 		if (gateName != null) {
 			try {
 				radius = Integer.parseInt(gateName);
-			} catch (Exception ex) {
+			} catch (NumberFormatException ex) {
 				error(sender, "Invalid radius number: " + gateName);
 				return;
 			}

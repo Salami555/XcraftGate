@@ -3,10 +3,12 @@ package de.xcraft.engelier.XcraftGate;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.GameMode;
@@ -45,8 +47,8 @@ public class ListenerPlayer implements Listener {
 			if ((playerLeftInWorld = (Map<String, String>) yaml.load(new FileInputStream(configFile))) == null) {
 				playerLeftInWorld = new HashMap<>();
         }
-		} catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            plugin.getLogger().log(Level.WARNING, "Loading players data failed", ex);
         }
     }
 
@@ -57,9 +59,8 @@ public class ListenerPlayer implements Listener {
         try(FileOutputStream fh = new FileOutputStream(configFile)) {
             new PrintStream(fh).println(dump);
             fh.flush();
-            fh.close();
-		} catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            plugin.getLogger().log(Level.WARNING, "Saving players data failed", ex);
         }
     }
     
@@ -69,7 +70,7 @@ public class ListenerPlayer implements Listener {
             Player player = event.getPlayer();
             String worldName = this.playerLeftInWorld.get(player.getUniqueId().toString());
             DataWorld world = this.plugin.getWorlds().get(worldName);
-            System.out.println("Player " + player.getName() + " (" + player.getUniqueId() + ") trying to join in world " + worldName);
+            plugin.getLogger().log(Level.INFO, "Player {0} ({1}) trying to join in world {2}", new Object[]{player.getName(), player.getUniqueId(), worldName});
             if (world != null && !world.isLoaded()) {
                 world.load();
             }
@@ -83,7 +84,7 @@ public class ListenerPlayer implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         DataWorld thisWorld = this.plugin.getWorlds().get(player.getWorld());
-        System.out.println(player.getName() + " " + thisWorld.getName() + " " + thisWorld.getGameMode() + " " + thisWorld.getLoginMessage());
+        plugin.getLogger().log(Level.INFO, "Player {0} joined world {1} in GM {2}: {3}", new Object[]{player.getName(), thisWorld.getName(), thisWorld.getGameMode(), thisWorld.getLoginMessage()});
         if (!player.hasPermission("XcraftGate.world.nogamemodechange")) {
             player.setGameMode(GameMode.getByValue(thisWorld.getGameMode()));
         }
@@ -210,7 +211,7 @@ public class ListenerPlayer implements Listener {
 		DataWorld worldDied = plugin.getWorlds().get(playerDiedInWorld.get(event.getPlayer().getUniqueId()));
 		
         if (worldDied == null) {
-            System.out.println("Player " + event.getPlayer().getName() + " died, but i don't know where?! (" + event.getPlayer().getWorld().getName() + ")");
+            plugin.getLogger().log(Level.INFO, "Player {0} died, but i don't know where?! ({1})", new Object[]{event.getPlayer().getName(), event.getPlayer().getWorld().getName()});
             return;
         }
 		

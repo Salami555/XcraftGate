@@ -58,7 +58,7 @@ public class XcraftGate extends JavaPlugin {
     public void taskCheckWorldInactive() {
         for (World thisWorld : getServer().getWorlds()) {
             if (worlds.get(thisWorld).checkInactive() && !thisWorld.getName().equalsIgnoreCase(serverconfig.getProperty("level-name"))) {
-                getLogger().log(Level.INFO, "{0}World ''{1}'' inactive. Unloading.", new Object[]{getNameBrackets(), thisWorld.getName()});
+                getLogger().log(Level.INFO, "World '{0}' inactive. Unloading.", thisWorld.getName());
 
                 worlds.get(thisWorld).unload();
             }
@@ -106,13 +106,12 @@ public class XcraftGate extends JavaPlugin {
 
         File serverconfigFile = new File("server.properties");
         if (!serverconfigFile.exists()) {
-            getLogger().log(Level.SEVERE, "{0}unable to load server.properties.", getNameBrackets());
+            getLogger().log(Level.SEVERE, "Missing server.properties");
         } else {
             try {
                 serverconfig.load(new FileInputStream(serverconfigFile));
-            } catch (Exception ex) {
-                getLogger().log(Level.SEVERE, "{0}error loading {1}", new Object[]{getNameBrackets(), serverconfigFile});
-                ex.printStackTrace();
+            } catch (IllegalArgumentException | IOException ex) {
+                getLogger().log(Level.SEVERE, "Error loading server config file: {0}", serverconfigFile);
             }
         }
 
@@ -120,7 +119,7 @@ public class XcraftGate extends JavaPlugin {
         try {
             setConfigDefaults();
         } catch (IOException e) {
-            e.printStackTrace();
+            getLogger().log(Level.SEVERE, "Saving config file failed", e);
         }
         worlds.load();
         gates.load();
@@ -136,12 +135,8 @@ public class XcraftGate extends JavaPlugin {
         getServer().getScheduler().scheduleSyncDelayedTask(this, this::taskLoadAllWorlds);
         getServer().getScheduler().scheduleSyncDelayedTask(this, pm::checkPluginVault);
 
-        try {
             getCommand("gate").setExecutor(new CommandHandlerGate(this));
             getCommand("gworld").setExecutor(new CommandHandlerWorld(this));
-        } catch (Exception ex) {
-            getLogger().log(Level.WARNING, "{0}getCommand().setExecutor() failed! Seems I got enabled by another plugin. Nag the bukkit team about this!", getNameBrackets());
-        }
     }
 
     @Override
@@ -157,12 +152,8 @@ public class XcraftGate extends JavaPlugin {
         YamlConfiguration ret = new YamlConfiguration();
         try {
             ret.load(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
-            e.printStackTrace();
+        } catch (IOException | InvalidConfigurationException e) {
+            getLogger().log(Level.SEVERE, "Loading config file failed", e);
         }
 
         return ret;
@@ -175,11 +166,10 @@ public class XcraftGate extends JavaPlugin {
             try {
                 getDataFolder().mkdir();
                 getDataFolder().setWritable(true);
-                getDataFolder().setExecutable(true);
 
                 configFile.createNewFile();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (IOException ex) {
+                getLogger().log(Level.SEVERE, "Creating config file failed", ex);
             }
         }
 
@@ -242,7 +232,7 @@ public class XcraftGate extends JavaPlugin {
         config.addDefault("biomes.taiga.chanceGrassTall", 2);
         config.addDefault("biomes.tundra.chanceLakeWater", 1);
 
-        System.out.println("Saving default config.");
+        getLogger().info("Saving default config.");
         config.options().copyDefaults();
         config.save(getConfigFile("config.yml"));
     }

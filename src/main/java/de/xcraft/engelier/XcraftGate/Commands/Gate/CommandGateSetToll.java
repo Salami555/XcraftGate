@@ -29,7 +29,7 @@ public class CommandGateSetToll extends CommandHelperGate {
 			
 			try {
 				toll = Double.parseDouble(args.get(0));
-			} catch (Exception e) {
+			} catch (IndexOutOfBoundsException | NumberFormatException ex) {
 				sender.sendMessage(ChatColor.RED + "ERROR: invalid currency amount");
 				return;
 			}

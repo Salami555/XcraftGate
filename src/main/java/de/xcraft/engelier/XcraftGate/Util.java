@@ -19,7 +19,7 @@ public class Util {
 		} else if (o instanceof String) {
 			try {
 				return Integer.parseInt((String) o);
-			} catch (Exception ex) {
+			} catch (NumberFormatException ex) {
 				return 0;
 			}
 		} else {

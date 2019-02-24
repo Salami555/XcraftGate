@@ -1,6 +1,7 @@
 package de.xcraft.engelier.XcraftGate;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -76,7 +77,7 @@ public class InventoryManager {
 	}
 	
 	private static void loadInventory(Player player, DataWorld world, GameMode mode) {
-		System.out.println("Loading Inventory " + mode.toString() + " in world " + world.getName() + " (group " + world.getInventoryGroup() + ") for " + player.getUniqueId());
+		plugin.getLogger().log(Level.INFO, "Loading Inventory {0} in world {1} (group {2}) for {3}", new Object[]{mode.toString(), world.getName(), world.getInventoryGroup(), player.getUniqueId()});
 		
 		boolean convertInv = false;
 		

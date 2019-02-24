@@ -23,7 +23,7 @@ public class CommandWorldSetCreatureLimit extends CommandHelperWorld {
 
 			try {
 				limit = new Integer(args.get(0));
-			} catch (Exception ex) {
+			} catch (IndexOutOfBoundsException | NumberFormatException ex) {
 				reply(sender, "Invalid number: " + (args.size() > 0 ? args.get(0) : "<null>"));
 				reply(sender, "Usage: /gworld setborder <worldname> <#limit>");
 				return;

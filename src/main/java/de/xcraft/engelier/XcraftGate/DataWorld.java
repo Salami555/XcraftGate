@@ -184,12 +184,12 @@ public class DataWorld {
 		
 		lastAction = System.currentTimeMillis();
 
-		plugin.getLogger().log(Level.INFO, "{0}loaded world {1} (Environment: {2}, Seed: {3}, Generator: {4})", new Object[]{plugin.getNameBrackets(), name, environment.toString(), world.getSeed(), generator.toString()});
+		plugin.getLogger().log(Level.INFO, "Loaded world {0} (Environment: {1}, Seed: {2}, Generator: {3})", new Object[]{name, environment.toString(), world.getSeed(), generator.toString()});
 	}
 	
 	public void unload() {
 		server.unloadWorld(world, true);
-		plugin.getLogger().log(Level.INFO, "{0}unloaded world {1}", new Object[]{plugin.getNameBrackets(), world.getName()});
+		plugin.getLogger().log(Level.INFO, "Unloaded world {0}", new Object[]{world.getName()});
 		this.world = null;
 	}
 	

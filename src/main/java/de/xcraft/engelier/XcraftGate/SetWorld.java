@@ -6,6 +6,7 @@ import de.xcraft.engelier.XcraftGate.Generator.Generator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,7 +36,7 @@ public class SetWorld implements Iterable<DataWorld> {
 			DataWorld newWorld;
 			
 			if (worldsYaml == null) {
-				plugin.getLogger().log(Level.INFO, "{0}empty worlds.yml - initializing", plugin.getNameBrackets());
+				plugin.getLogger().info("Empty worlds.yml - initializing");
 				return;
 			}
 			
@@ -101,11 +102,11 @@ public class SetWorld implements Iterable<DataWorld> {
 				
 				counter++;
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (IOException ex) {
+            plugin.getLogger().log(Level.WARNING, "Loading worlds data failed", ex);
 		}		
 		
-		plugin.getLogger().log(Level.INFO, "{0}loaded {1} world configurations", new Object[]{plugin.getNameBrackets(), counter});
+		plugin.getLogger().log(Level.INFO, "Loaded {0} world configurations", counter);
 	}
 
 	public void save() {
@@ -123,18 +124,18 @@ public class SetWorld implements Iterable<DataWorld> {
 		try (FileOutputStream fh = new FileOutputStream(configFile)) {
 			new PrintStream(fh).println(dump);
 			fh.flush();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (IOException ex) {
+            plugin.getLogger().log(Level.WARNING, "Saving worlds data failed", ex);
 		}
 	}
 	
 	public void onWorldLoad(final World world) {
 		if (worlds.get(world.getName()) != null) {
-			plugin.getLogger().log(Level.INFO, "{0}World ''{1}'' loading. Applying config.", new Object[]{plugin.getNameBrackets(), world.getName()});
+			plugin.getLogger().log(Level.INFO, "World '{0}' loading. Applying config.", world.getName());
 			get(world).setWorld(world);
 			get(world).setParameters();					
 		} else {
-			plugin.getLogger().log(Level.INFO, "{0}World ''{1}'' detected. Adding to config.", new Object[]{plugin.getNameBrackets(), world.getName()});
+			plugin.getLogger().log(Level.INFO, "World '{0}' detected. Adding to config.", world.getName());
 			DataWorld newWorld = new DataWorld(plugin, world.getName(), world.getEnvironment());
 			add(newWorld);
 			save();
