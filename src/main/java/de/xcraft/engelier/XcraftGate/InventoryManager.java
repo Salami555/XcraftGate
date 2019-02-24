@@ -67,12 +67,12 @@ public class InventoryManager {
 		ItemStack[] thisArmor = player.getInventory().getArmorContents();
 		ItemStack[] thisInv = player.getInventory().getContents();
 		
-		for (Integer j = 0; j < 4; j++) {
-			armor.set(j.toString(), thisArmor[j]);
+		for (int j = 0; j < 4; j++) {
+			armor.set(Integer.toString(j), thisArmor[j]);
 		}
 		
-		for (Integer i = 0; i < 36; i++) {
-			inv.set(i.toString(), thisInv[i]);
+		for (int  i = 0; i < 36; i++) {
+			inv.set(Integer.toString(i), thisInv[i]);
 		}
 	}
 	
@@ -105,13 +105,13 @@ public class InventoryManager {
 		ItemStack[] thisArmor = new ItemStack[4];
 		ItemStack[] thisInv = new ItemStack[36];
 		
-		for (Integer j = 0; j < 4; j++) {
-			thisArmor[j] = armor.getItemStack(j.toString(), new ItemStack(Material.AIR));
+		for (int j = 0; j < 4; j++) {
+			thisArmor[j] = armor.getItemStack(Integer.toString(j), new ItemStack(Material.AIR));
 		}
 		player.getInventory().setArmorContents(thisArmor);
 		
-		for (Integer i = 0; i < 36; i++) {
-			thisInv[i] = inv.getItemStack(i.toString(), new ItemStack(Material.AIR));
+		for (int i = 0; i < 36; i++) {
+			thisInv[i] = inv.getItemStack(Integer.toString(i), new ItemStack(Material.AIR));
 		}
 		player.getInventory().setContents(thisInv);
 		
