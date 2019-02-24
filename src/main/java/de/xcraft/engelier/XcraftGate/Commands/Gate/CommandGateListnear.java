@@ -17,7 +17,7 @@ public class CommandGateListnear extends CommandHelperGate {
 
 	@Override
 	public void execute(CommandSender sender, String gateName, List<String> args) {
-		Integer radius = 10;
+		int radius = 10;
 		
 		if (gateName != null) {
 			try {

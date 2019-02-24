@@ -19,10 +19,10 @@ public class CommandWorldSetBorder extends CommandHelperWorld {
 		} else if (!hasWorld(worldName)) {
 			reply(sender, "World not found: " + worldName);
 		} else {
-			Integer border;
+			int border;
 
 			try {
-				border = new Integer(args.get(0));
+				border = Integer.parseInt(args.get(0));
 			} catch (IndexOutOfBoundsException | NumberFormatException ex) {
 				reply(sender, "Invalid number: " + (args.size() > 0 ? args.get(0) : "<null>"));
 				reply(sender, "Usage: /gworld setborder <worldname> <#border>");

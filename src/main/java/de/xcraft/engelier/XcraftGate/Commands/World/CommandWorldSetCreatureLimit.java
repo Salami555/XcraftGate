@@ -19,10 +19,10 @@ public class CommandWorldSetCreatureLimit extends CommandHelperWorld {
 		} else if (!hasWorld(worldName)) {
 			reply(sender, "World not found: " + worldName);
 		} else {
-			Integer limit;
+			int limit;
 
 			try {
-				limit = new Integer(args.get(0));
+				limit = Integer.parseInt(args.get(0));
 			} catch (IndexOutOfBoundsException | NumberFormatException ex) {
 				reply(sender, "Invalid number: " + (args.size() > 0 ? args.get(0) : "<null>"));
 				reply(sender, "Usage: /gworld setborder <worldname> <#limit>");

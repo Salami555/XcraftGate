@@ -3,7 +3,7 @@ package de.xcraft.engelier.XcraftGate;
 import org.bukkit.Location;
 
 public class Util {
-	public static Integer castInt(Object o) {
+	public static int castInt(Object o) {
 		if (o == null) {
 			return 0;
 		} else if (o instanceof Byte) {
