@@ -71,7 +71,7 @@ public class CommandHandlerGate extends CommandHelper implements CommandExecutor
 	}
 	
 	public void printUsage(CommandSender sender) {
-		sender.sendMessage(ChatColor.LIGHT_PURPLE + plugin.getNameBrackets() + "by Engelier");
+		sender.sendMessage(plugin.getPluginAbout());
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gate info <name>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gate create <name>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gate move <name>");

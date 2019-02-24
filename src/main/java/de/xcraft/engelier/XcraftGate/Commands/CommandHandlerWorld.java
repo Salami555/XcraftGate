@@ -113,7 +113,7 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
 	}
 
 	public void printUsage(CommandSender sender) {
-		sender.sendMessage(ChatColor.LIGHT_PURPLE + plugin.getNameBrackets() + "by Engelier");
+		sender.sendMessage(plugin.getPluginAbout());
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld list");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld info <world>");
 		sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN	+ "/gworld listenv");

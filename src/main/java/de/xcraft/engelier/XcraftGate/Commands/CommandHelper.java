@@ -7,13 +7,15 @@ import org.bukkit.entity.Player;
 
 public abstract class CommandHelper {
 	protected final XcraftGate plugin;
+    private final String messagePrefix;
 
 	public CommandHelper(XcraftGate instance) {
 		plugin = instance;
+        messagePrefix = ChatColor.LIGHT_PURPLE + "[" + plugin.getDescription().getFullName() + "] " + ChatColor.DARK_AQUA;
 	}
 
 	public void reply(CommandSender sender, String message) {
-		sender.sendMessage(ChatColor.LIGHT_PURPLE + plugin.getNameBrackets() + ChatColor.DARK_AQUA + message);
+		sender.sendMessage(messagePrefix + message);
 	}
 
 	public void error(CommandSender sender, String message) {

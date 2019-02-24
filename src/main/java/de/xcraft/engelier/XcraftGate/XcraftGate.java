@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -40,6 +42,8 @@ public class XcraftGate extends JavaPlugin {
     public YamlConfiguration config = null;
 
     public final Properties serverconfig = new Properties();
+
+    private String aboutPluginString = null;
 
     public void taskCreatureLimit() {
         for (DataWorld thisWorld : worlds) {
@@ -135,8 +139,8 @@ public class XcraftGate extends JavaPlugin {
         getServer().getScheduler().scheduleSyncDelayedTask(this, this::taskLoadAllWorlds);
         getServer().getScheduler().scheduleSyncDelayedTask(this, pm::checkPluginVault);
 
-            getCommand("gate").setExecutor(new CommandHandlerGate(this));
-            getCommand("gworld").setExecutor(new CommandHandlerWorld(this));
+        getCommand("gate").setExecutor(new CommandHandlerGate(this));
+        getCommand("gworld").setExecutor(new CommandHandlerWorld(this));
     }
 
     @Override
@@ -250,6 +254,20 @@ public class XcraftGate extends JavaPlugin {
         } else {
             return false;
         }
+    }
+
+    public String getPluginAbout() {
+        if (aboutPluginString == null) {
+            aboutPluginString = new StringBuilder()
+                    .append(ChatColor.LIGHT_PURPLE)
+                    .append('[')
+                    .append(getDescription().getFullName())
+                    .append(']')
+                    .append(" by ")
+                    .append(getDescription().getAuthors().stream().collect(Collectors.joining(" & ")))
+                    .toString();
+        }
+        return aboutPluginString;
     }
 
     public String getNameBrackets() {
