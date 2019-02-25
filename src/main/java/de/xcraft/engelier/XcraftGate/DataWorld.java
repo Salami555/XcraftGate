@@ -38,8 +38,8 @@ public class DataWorld {
     private boolean sticky = false;
     private int viewDistance = 10;
     private boolean keepSpawnInMemory = false;
-    private int gamemode = 0;
-    private int difficulty = 0;
+    private GameMode gamemode = GameMode.ADVENTURE;
+    private Difficulty difficulty = Difficulty.NORMAL;
     private boolean announcePlayerDeath = true;
     private RespawnLocation respawnLocation = RespawnLocation.WORLDSPAWN;
     private String respawnWorld = null;
@@ -65,8 +65,8 @@ public class DataWorld {
         DataWorld.plugin = instance;
         DataWorld.server = plugin.getServer();
         this.allowPvP = Util.castBoolean(plugin.serverconfig.getProperty("pvp", "false"));
-        this.gamemode = Util.castInt(plugin.serverconfig.getProperty("gamemode", "0"));
-        this.difficulty = Util.castInt(plugin.serverconfig.getProperty("difficulty", "1"));
+        this.gamemode = Util.castGameMode(plugin.serverconfig.getProperty("gamemode", "ADVENTURE"));
+        this.difficulty = Util.castDifficulty(plugin.serverconfig.getProperty("difficulty", "NORMAL"));
         this.allowAnimals = Util.castBoolean(plugin.serverconfig.getProperty("spawn-animals", "true"));
         this.allowMonsters = Util.castBoolean(plugin.serverconfig.getProperty("spawn-monsters", "true"));
 
@@ -426,21 +426,21 @@ public class DataWorld {
         return this.keepSpawnInMemory;
     }
 
-    public void setGameMode(int gamemode) {
+    public void setGameMode(GameMode gamemode) {
         this.gamemode = gamemode;
         setParameters();
     }
 
-    public int getGameMode() {
+    public GameMode getGameMode() {
         return this.gamemode;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
         setParameters();
     }
 
-    public int getDifficulty() {
+    public Difficulty getDifficulty() {
         return this.difficulty;
     }
 
@@ -513,7 +513,7 @@ public class DataWorld {
         world.setSpawnFlags(allowMonsters, allowAnimals);
         world.setStorm(setWeather.getId() == Weather.STORM.getId());
         //world.setKeepSpawnInMemory(keepSpawnInMemory); //FIXME: This is causing the bad behaviour (lag, falling through the world, etc ...)
-        world.setDifficulty(Difficulty.getByValue(difficulty));
+        world.setDifficulty(difficulty);
         if (changeTime) {
             setWorldTime(setTime);
         }
@@ -536,7 +536,7 @@ public class DataWorld {
         sender.sendMessage("Weather / changes allowed: " + setWeather.toString() + " / " + (allowWeatherChange ? "yes" : "no"));
         sender.sendMessage("Current Time / frozen: " + (world != null ? timeToString(world.getTime()) : "world not loaded!") + " / " + (timeFrozen ? "yes" : "no"));
         sender.sendMessage("Inventory Group: " + inventoryGroup);
-        sender.sendMessage("GameMode / Difficulty: " + GameMode.getByValue(gamemode) + " / " + Difficulty.getByValue(difficulty));
+        sender.sendMessage("GameMode / Difficulty: " + gamemode.toString() + " / " + difficulty.toString());
         sender.sendMessage("Announce player deaths: " + (announcePlayerDeath ? "Yes" : "No"));
         sender.sendMessage("Login Message: " + loginMessage);
         if (world != null) {

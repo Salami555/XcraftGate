@@ -82,8 +82,8 @@ public class SetWorld implements Iterable<DataWorld> {
                 newWorld.setSuppressHunger(Util.castBoolean(worldData.get("suppressHunger")));
                 newWorld.setSticky(Util.castBoolean(worldData.get("sticky")));
                 newWorld.setAnnouncePlayerDeath(Util.castBoolean(worldData.get("announcePlayerDeath")));
-                newWorld.setDifficulty(Util.castInt(worldData.get("difficulty")));
-                newWorld.setGameMode(Util.castInt(worldData.get("gamemode")));
+                newWorld.setDifficulty(Util.castDifficulty(worldData.get("difficulty")));
+                newWorld.setGameMode(Util.castGameMode(worldData.get("gamemode")));
                 newWorld.setRespawnWorldName((String) worldData.get("respawnWorld"));
                 newWorld.setInventoryGroup((String) worldData.get("inventorygroup"));
 

@@ -11,7 +11,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -85,9 +84,9 @@ public class ListenerPlayer implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         DataWorld thisWorld = this.plugin.getWorlds().get(player.getWorld());
-        plugin.getLogger().log(Level.INFO, "Player {0} joined world {1} in GM {2}: {3}", new Object[]{player.getName(), thisWorld.getName(), thisWorld.getGameMode(), thisWorld.getLoginMessage()});
+        plugin.getLogger().log(Level.INFO, "Player {0} joined world \"{1}\" in GM {2}", new Object[]{player.getName(), thisWorld.getName(), thisWorld.getGameMode()});
         if (!player.hasPermission("XcraftGate.world.nogamemodechange")) {
-            player.setGameMode(GameMode.getByValue(thisWorld.getGameMode()));
+            player.setGameMode(thisWorld.getGameMode());
         }
     }
 
@@ -105,7 +104,7 @@ public class ListenerPlayer implements Listener {
         }
 
         if (!event.getPlayer().hasPermission("XcraftGate.world.nogamemodechange")) {
-            event.getPlayer().setGameMode(GameMode.getByValue(toWorld.getGameMode()));
+            event.getPlayer().setGameMode(toWorld.getGameMode());
         }
 
         playerLeftInWorld.put(event.getPlayer().getUniqueId().toString(), event.getPlayer().getWorld().getName());

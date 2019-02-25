@@ -1,6 +1,7 @@
 package de.xcraft.engelier.XcraftGate.Commands.World;
 
 import de.xcraft.engelier.XcraftGate.Commands.CommandHelperWorld;
+import de.xcraft.engelier.XcraftGate.Util;
 import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.List;
 import org.bukkit.Difficulty;
@@ -20,20 +21,14 @@ public class CommandWorldSetDifficulty extends CommandHelperWorld {
         } else if (!hasWorld(worldName)) {
             reply(sender, "World not found: " + worldName);
         } else {
-            Difficulty newDif = null;
-
-            for (Difficulty thisDif : Difficulty.values()) {
-                if (thisDif.toString().equalsIgnoreCase(args.get(0))) {
-                    newDif = thisDif;
-                }
-            }
+            Difficulty newDif = Util.castDifficulty(args, null);
 
             if (newDif == null) {
                 error(sender, "Unknown difficulty.");
                 return;
             }
 
-            getWorld(worldName).setDifficulty(newDif.getValue());
+            getWorld(worldName).setDifficulty(newDif);
             reply(sender, "Difficulty on world " + worldName + " set to " + newDif.toString());
         }
     }

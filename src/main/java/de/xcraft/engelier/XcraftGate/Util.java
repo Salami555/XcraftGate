@@ -1,8 +1,62 @@
 package de.xcraft.engelier.XcraftGate;
 
+import java.util.Arrays;
+import org.bukkit.Difficulty;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 
 public class Util {
+
+    public static GameMode DEFAULT_GAMEMODE = GameMode.ADVENTURE;
+    public static Difficulty DEFAULT_DIFFICULTY = Difficulty.NORMAL;
+
+    public static GameMode castGameMode(Object o) {
+        return castGameMode(o, DEFAULT_GAMEMODE);
+    }
+
+    public static GameMode castGameMode(Object o, GameMode defaultGameMode) {
+        if (o instanceof GameMode) {
+            return (GameMode) o;
+        }
+        if (o instanceof Number) {
+            return GameMode.getByValue((int) o);
+        }
+        if (o instanceof String) {
+            String gm = (String) o;
+            if (gm.matches("[0-3]")) {
+                return GameMode.getByValue(Util.castInt(gm));
+            } else {
+                return Arrays.stream(GameMode.values())
+                        .filter(mode -> mode.toString().equalsIgnoreCase(gm))
+                        .findAny().orElse(defaultGameMode);
+            }
+        }
+        return defaultGameMode;
+    }
+
+    public static Difficulty castDifficulty(Object o) {
+        return castDifficulty(o, DEFAULT_DIFFICULTY);
+    }
+
+    public static Difficulty castDifficulty(Object o, Difficulty defaultDifficulty) {
+        if (o instanceof Difficulty) {
+            return (Difficulty) o;
+        }
+        if (o instanceof Number) {
+            return Difficulty.getByValue((int) o);
+        }
+        if (o instanceof String) {
+            String gm = (String) o;
+            if (gm.matches("[0-3]")) {
+                return Difficulty.getByValue(Util.castInt(gm));
+            } else {
+                return Arrays.stream(Difficulty.values())
+                        .filter(mode -> mode.toString().equalsIgnoreCase(gm))
+                        .findAny().orElse(defaultDifficulty);
+            }
+        }
+        return defaultDifficulty;
+    }
 
     public static int castInt(Object o) {
         if (o == null) {
