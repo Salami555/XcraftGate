@@ -134,11 +134,11 @@ public class SetWorld implements Iterable<DataWorld> {
 
     public void onWorldLoad(final World world) {
         if (worlds.get(world.getName()) != null) {
-            plugin.getLogger().log(Level.INFO, "World '{0}' loading. Applying config.", world.getName());
+            plugin.getLogger().log(Level.INFO, "World \"{0}\" loading. Applying config.", world.getName());
             get(world).setWorld(world);
             get(world).setParameters();
         } else {
-            plugin.getLogger().log(Level.INFO, "World '{0}' detected. Adding to config.", world.getName());
+            plugin.getLogger().log(Level.INFO, "World \"{0}\" detected. Adding to config.", world.getName());
             DataWorld newWorld = new DataWorld(plugin, world.getName(), world.getEnvironment());
             add(newWorld);
             save();

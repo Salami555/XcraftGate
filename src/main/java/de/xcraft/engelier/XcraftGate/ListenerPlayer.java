@@ -216,7 +216,7 @@ public class ListenerPlayer implements Listener {
         DataWorld worldDied = plugin.getWorlds().get(playerDiedInWorld.get(event.getPlayer().getUniqueId()));
 
         if (worldDied == null) {
-            plugin.getLogger().log(Level.INFO, "Player {0} died, but i don't know where?! ({1})", new Object[]{event.getPlayer().getName(), event.getPlayer().getWorld().getName()});
+            plugin.getLogger().log(Level.INFO, "Player {0} died, but i don\'t know where?! ({1})", new Object[]{event.getPlayer().getName(), event.getPlayer().getWorld().getName()});
             return;
         }
 

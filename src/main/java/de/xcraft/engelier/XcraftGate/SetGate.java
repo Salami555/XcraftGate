@@ -200,7 +200,7 @@ public class SetGate implements Iterable<DataGate> {
             }
         }
 
-        plugin.getLogger().log(Level.INFO, "Loaded {0} gates for world '{1}'", new Object[]{gateCounter, world.getName()});
+        plugin.getLogger().log(Level.INFO, "Loaded {0} gates for world \"{1}\"", new Object[]{gateCounter, world.getName()});
     }
 
     public void onWorldUnload(World world) {

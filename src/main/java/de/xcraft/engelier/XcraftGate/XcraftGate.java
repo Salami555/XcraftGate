@@ -61,7 +61,7 @@ public class XcraftGate extends JavaPlugin {
     public void taskCheckWorldInactive() {
         for (World thisWorld : getServer().getWorlds()) {
             if (worlds.get(thisWorld).checkInactive() && !thisWorld.getName().equalsIgnoreCase(serverconfig.getProperty("level-name"))) {
-                getLogger().log(Level.INFO, "World '{0}' inactive. Unloading.", thisWorld.getName());
+                getLogger().log(Level.INFO, "World \"{0}\" inactive. Unloading.", thisWorld.getName());
 
                 worlds.get(thisWorld).unload();
             }
