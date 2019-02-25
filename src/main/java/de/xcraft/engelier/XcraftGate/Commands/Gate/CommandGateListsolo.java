@@ -8,27 +8,28 @@ import org.bukkit.command.CommandSender;
 
 public class CommandGateListsolo extends CommandHelperGate {
 
-	public CommandGateListsolo(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandGateListsolo(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String gateName, List<String> args) {
-		for (DataGate thisGate : plugin.getGates()) {
-			if (!thisGate.hasTarget()) {
-				boolean hasSource = false;
-				
-				for (DataGate sourceGate : plugin.getGates()) {
-					if (sourceGate.getTarget() != null && sourceGate.getTarget().equals(thisGate)) { 
-						hasSource = true;
-					}
-				}
-				
-				if (!hasSource)
-					reply(sender, "Found orphan: " + thisGate.getName());
-			}
-		}
-		
-	}
+    @Override
+    public void execute(CommandSender sender, String gateName, List<String> args) {
+        for (DataGate thisGate : plugin.getGates()) {
+            if (!thisGate.hasTarget()) {
+                boolean hasSource = false;
+
+                for (DataGate sourceGate : plugin.getGates()) {
+                    if (sourceGate.getTarget() != null && sourceGate.getTarget().equals(thisGate)) {
+                        hasSource = true;
+                    }
+                }
+
+                if (!hasSource) {
+                    reply(sender, "Found orphan: " + thisGate.getName());
+                }
+            }
+        }
+
+    }
 
 }

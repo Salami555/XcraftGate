@@ -7,25 +7,25 @@ import org.bukkit.command.CommandSender;
 
 public class CommandGateSetDenySilent extends CommandHelperGate {
 
-	public CommandGateSetDenySilent(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandGateSetDenySilent(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String gateName, List<String> args) {
-		if (gateName == null) {
-			error(sender, "No gate given.");
-			reply(sender, "Usage: /gate setdenysilent <gatename> <true|false>");
-		} else if (!gateExists(gateName)) {
-			reply(sender, "Gate not found: " + gateName);
-		} else {
-			Boolean denysilent;
-			
-			denysilent = (args.isEmpty() || args.get(0).equalsIgnoreCase("true"));
+    @Override
+    public void execute(CommandSender sender, String gateName, List<String> args) {
+        if (gateName == null) {
+            error(sender, "No gate given.");
+            reply(sender, "Usage: /gate setdenysilent <gatename> <true|false>");
+        } else if (!gateExists(gateName)) {
+            reply(sender, "Gate not found: " + gateName);
+        } else {
+            Boolean denysilent;
 
-			getGate(gateName).setDenySilent(denysilent);
-			reply(sender, "Gate " + gateName + " denys usage " + (denysilent ? "silently." : "loudly."));
-		}
-	}
+            denysilent = (args.isEmpty() || args.get(0).equalsIgnoreCase("true"));
+
+            getGate(gateName).setDenySilent(denysilent);
+            reply(sender, "Gate " + gateName + " denys usage " + (denysilent ? "silently." : "loudly."));
+        }
+    }
 
 }

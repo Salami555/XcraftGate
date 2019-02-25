@@ -8,29 +8,29 @@ import org.bukkit.entity.Player;
 
 public class CommandWorldListPlayers extends CommandHelperWorld {
 
-	public CommandWorldListPlayers(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandWorldListPlayers(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String worldName,	List<String> args) {
-		if (worldName == null) {
-			error(sender, "No world given.");
-			reply(sender, "Usage: /gworld listplayers <worldname>");
-		} else if (!hasWorld(worldName)) {
-			reply(sender, "World not found: " + worldName);
-		} else {
-			String players = "";
-			for (Player player : plugin.getServer().getWorld(worldName).getPlayers()) {
-				players += ", " + player.getName();
-			}
-			
-			if (players.length() > 0) {
-				reply(sender, "Players in world " + worldName + ": " + players.substring(2));
-			} else {
-				reply(sender, "No players in world " + worldName + ".");
-			}
-		}
-	}
+    @Override
+    public void execute(CommandSender sender, String worldName, List<String> args) {
+        if (worldName == null) {
+            error(sender, "No world given.");
+            reply(sender, "Usage: /gworld listplayers <worldname>");
+        } else if (!hasWorld(worldName)) {
+            reply(sender, "World not found: " + worldName);
+        } else {
+            String players = "";
+            for (Player player : plugin.getServer().getWorld(worldName).getPlayers()) {
+                players += ", " + player.getName();
+            }
+
+            if (players.length() > 0) {
+                reply(sender, "Players in world " + worldName + ": " + players.substring(2));
+            } else {
+                reply(sender, "No players in world " + worldName + ".");
+            }
+        }
+    }
 
 }

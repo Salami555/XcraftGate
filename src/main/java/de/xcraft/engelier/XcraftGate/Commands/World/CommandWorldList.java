@@ -9,21 +9,21 @@ import org.bukkit.command.CommandSender;
 
 public class CommandWorldList extends CommandHelperWorld {
 
-	public CommandWorldList(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandWorldList(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String worldName, List<String> args) {
-		String worlds = "";
-		for (DataWorld thisWorld : plugin.getWorlds()) {
-			worlds += ", " + thisWorld.getName();
-			if (thisWorld.isLoaded()) {
-				worlds += "(*)";
-			}
-		}
-		reply(sender, "Worlds: " + ChatColor.WHITE + worlds.substring(2));
-		reply(sender, "World marked with (*) are currently active on the server.");
-	}
+    @Override
+    public void execute(CommandSender sender, String worldName, List<String> args) {
+        String worlds = "";
+        for (DataWorld thisWorld : plugin.getWorlds()) {
+            worlds += ", " + thisWorld.getName();
+            if (thisWorld.isLoaded()) {
+                worlds += "(*)";
+            }
+        }
+        reply(sender, "Worlds: " + ChatColor.WHITE + worlds.substring(2));
+        reply(sender, "World marked with (*) are currently active on the server.");
+    }
 
 }

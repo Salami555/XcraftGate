@@ -17,8 +17,8 @@ public class GeneratorFlatlands extends ChunkGenerator {
         return data;
     }
 
-	@Override
-	public Location getFixedSpawnLocation(World world, Random random) {
+    @Override
+    public Location getFixedSpawnLocation(World world, Random random) {
         int x = random.nextInt(200) - 100;
         int z = random.nextInt(200) - 100;
         int y = world.getHighestBlockYAt(x, z);

@@ -9,15 +9,15 @@ import org.bukkit.entity.Player;
 
 public class CommandWorldSetSpawn extends CommandHelperWorld {
 
-	public CommandWorldSetSpawn(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandWorldSetSpawn(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String worldName,	List<String> args) {
-		Location loc = ((Player)sender).getLocation();
-		loc.getWorld().setSpawnLocation((int)Math.floor(loc.getX()), (int)Math.floor(loc.getY()), (int)Math.floor(loc.getZ()));
-		reply(sender, "Set spawn location of " + loc.getWorld().getName() + " to your current position.");
-	}
+    @Override
+    public void execute(CommandSender sender, String worldName, List<String> args) {
+        Location loc = ((Player) sender).getLocation();
+        loc.getWorld().setSpawnLocation((int) Math.floor(loc.getX()), (int) Math.floor(loc.getY()), (int) Math.floor(loc.getZ()));
+        reply(sender, "Set spawn location of " + loc.getWorld().getName() + " to your current position.");
+    }
 
 }

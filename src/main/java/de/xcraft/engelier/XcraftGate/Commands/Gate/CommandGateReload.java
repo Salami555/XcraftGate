@@ -7,15 +7,15 @@ import org.bukkit.command.CommandSender;
 
 public class CommandGateReload extends CommandHelperGate {
 
-	public CommandGateReload(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandGateReload(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String gateName, List<String> args) {
-		plugin.getGates().reload();
-		
-		reply(sender, "Loaded " + plugin.getGates().size() + " gates.");		
-	}
+    @Override
+    public void execute(CommandSender sender, String gateName, List<String> args) {
+        plugin.getGates().reload();
+
+        reply(sender, "Loaded " + plugin.getGates().size() + " gates.");
+    }
 
 }

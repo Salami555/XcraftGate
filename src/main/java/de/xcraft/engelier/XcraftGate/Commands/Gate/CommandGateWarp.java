@@ -8,20 +8,20 @@ import org.bukkit.entity.Player;
 
 public class CommandGateWarp extends CommandHelperGate {
 
-	public CommandGateWarp(XcraftGate plugin) {
-		super(plugin);
-	}
+    public CommandGateWarp(XcraftGate plugin) {
+        super(plugin);
+    }
 
-	@Override
-	public void execute(CommandSender sender, String gateName, List<String> args) {
-		if (gateName == null) {
-			error(sender, "No gate given.");
-			reply(sender, "Usage: /gate warp <gatename>");
-		} else if (!gateExists(gateName)) {
-			reply(sender, "Gate not found: " + gateName);
-		} else {
-			plugin.justTeleportedFrom.put(((Player) sender).getName(), getGate(gateName).getLocation());
-			getGate(gateName).portHere((Player) sender);
-		}
-	}
+    @Override
+    public void execute(CommandSender sender, String gateName, List<String> args) {
+        if (gateName == null) {
+            error(sender, "No gate given.");
+            reply(sender, "Usage: /gate warp <gatename>");
+        } else if (!gateExists(gateName)) {
+            reply(sender, "Gate not found: " + gateName);
+        } else {
+            plugin.justTeleportedFrom.put(((Player) sender).getName(), getGate(gateName).getLocation());
+            getGate(gateName).portHere((Player) sender);
+        }
+    }
 }
