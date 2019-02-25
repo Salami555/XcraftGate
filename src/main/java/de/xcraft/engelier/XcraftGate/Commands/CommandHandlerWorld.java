@@ -1,35 +1,35 @@
 package de.xcraft.engelier.XcraftGate.Commands;
 
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetSticky;
 import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldAllowAnimals;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldLoad;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetTime;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetRespawnLocation;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldListPlayers;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetInventoryGroup;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetSpawn;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetWeather;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldAllowWeatherchange;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetGameRule;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldInfo;
 import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldAllowMonsters;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldAllowPvP;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldAllowWeatherchange;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldCreate;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldDelete;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldInfo;
 import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldKeepSpawnInMemory;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldList;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldListEnv;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldListPlayers;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldLoad;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetAnnounceDeath;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetBorder;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetCreatureLimit;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetDifficulty;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetGameMode;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetGameRule;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetInventoryGroup;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetLoginMessage;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetRespawnLocation;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetSpawn;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetSticky;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetTime;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetWeather;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSuppressHealthregain;
+import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSuppressHunger;
 import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldTimeFrozen;
 import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldUnload;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetBorder;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSuppressHunger;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSuppressHealthregain;
 import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldWarpto;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldCreate;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetDifficulty;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldList;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldAllowPvP;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetAnnounceDeath;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetGameMode;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldListEnv;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetCreatureLimit;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldDelete;
-import de.xcraft.engelier.XcraftGate.Commands.World.CommandWorldSetLoginMessage;
 import de.xcraft.engelier.XcraftGate.XcraftGate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,7 +113,8 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
         subcommands.put("setinventorygroup", new CommandWorldSetInventoryGroup(plugin));
     }
 
-    public void printUsage(CommandSender sender) {
+    @Override
+    public void replyUsage(CommandSender sender) {
         sender.sendMessage(plugin.getPluginAbout());
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/gworld list");
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "-> " + ChatColor.GREEN + "/gworld info <world>");
@@ -154,8 +155,8 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
             return true;
         }
 
-        if (args.length == 0) {
-            printUsage(sender);
+        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
+            replyUsage(sender);
             return true;
         }
 
@@ -165,7 +166,7 @@ public class CommandHandlerWorld extends CommandHelper implements CommandExecuto
         }
 
         if (subcommands.get(args[0].toLowerCase()) == null) {
-            printUsage(sender);
+            replyUsage(sender);
             error(sender, "Unkown gworld command: " + args[0].toLowerCase());
         } else {
             List<String> largs = Arrays.asList(args);

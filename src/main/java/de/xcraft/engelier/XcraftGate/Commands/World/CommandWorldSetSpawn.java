@@ -14,6 +14,9 @@ public class CommandWorldSetSpawn extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+    }
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         Location loc = ((Player) sender).getLocation();
         loc.getWorld().setSpawnLocation((int) Math.floor(loc.getX()), (int) Math.floor(loc.getY()), (int) Math.floor(loc.getZ()));

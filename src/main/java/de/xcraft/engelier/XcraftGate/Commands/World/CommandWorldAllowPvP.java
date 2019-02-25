@@ -12,10 +12,15 @@ public class CommandWorldAllowPvP extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld allowpvp <worldname> <true|false>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld allowpvp <worldname> <true|false>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "World not found: " + worldName);
         } else {

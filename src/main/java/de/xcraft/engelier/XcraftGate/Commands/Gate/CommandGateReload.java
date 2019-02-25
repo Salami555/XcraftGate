@@ -10,6 +10,10 @@ public class CommandGateReload extends CommandHelperGate {
     public CommandGateReload(XcraftGate plugin) {
         super(plugin);
     }
+    
+    @Override
+    public void replyUsage(CommandSender sender) {
+    }
 
     @Override
     public void execute(CommandSender sender, String gateName, List<String> args) {

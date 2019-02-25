@@ -15,6 +15,10 @@ public class CommandWorldListEnv extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         reply(sender, "Environments provided by Bukkit:");
         for (Environment thisEnv : World.Environment.values()) {

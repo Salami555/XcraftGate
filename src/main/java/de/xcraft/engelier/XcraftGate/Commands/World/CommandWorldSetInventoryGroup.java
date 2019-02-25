@@ -12,15 +12,20 @@ public class CommandWorldSetInventoryGroup extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld setinventorygroup <worldname> <groupname>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld setinventorygroup <worldname> <groupname>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "World not found: " + worldName);
         } else if (args.size() != 1) {
             error(sender, "Wrong argument count.");
-            reply(sender, "Usage: /gworld setinventorygroup <worldname> <groupname>");
+            replyUsage(sender);
         } else {
             getWorld(worldName).setInventoryGroup(args.get(0));
             reply(sender, "Inventory group for world " + worldName + " set to " + args.get(0));

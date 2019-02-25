@@ -22,6 +22,8 @@ public abstract class CommandHelper {
     public void error(CommandSender sender, String message) {
         sender.sendMessage(ChatColor.RED + "Error: " + message);
     }
+    
+    public abstract void replyUsage(CommandSender sender);
 
     public boolean isPermitted(Player player, String command, String subcommand) {
         if (player == null) {

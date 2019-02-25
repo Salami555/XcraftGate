@@ -12,10 +12,15 @@ public class CommandWorldLoad extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld load <worldname>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld load <worldname>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "Unknown world: " + worldName);
         } else if (getWorld(worldName).isLoaded()) {

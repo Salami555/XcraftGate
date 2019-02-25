@@ -14,15 +14,20 @@ public class CommandWorldSetRespawnLocation extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld setrespawnlocation <worldname> <worldspawn|bedspawn|world <worldname>>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld setrespawnlocation <worldname> <worldspawn|bedspawn|world <worldname>>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "Unknown world: " + worldName);
         } else if (args.size() < 1) {
             error(sender, "No location given.");
-            reply(sender, "Usage: /gworld setrespawnlocation <worldname> <worldspawn|bedspawn|world <worldname>>");
+            replyUsage(sender);
         } else {
             String rsLoc = args.get(0);
             RespawnLocation newRSLoc = null;

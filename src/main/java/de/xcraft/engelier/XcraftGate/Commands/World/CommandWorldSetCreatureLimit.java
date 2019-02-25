@@ -12,10 +12,15 @@ public class CommandWorldSetCreatureLimit extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld setborder <worldname> <#limit>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld setcreaturelimit <worldname> <#limit>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "World not found: " + worldName);
         } else {
@@ -25,7 +30,7 @@ public class CommandWorldSetCreatureLimit extends CommandHelperWorld {
                 limit = Integer.parseInt(args.get(0));
             } catch (IndexOutOfBoundsException | NumberFormatException ex) {
                 reply(sender, "Invalid number: " + (args.size() > 0 ? args.get(0) : "<null>"));
-                reply(sender, "Usage: /gworld setborder <worldname> <#limit>");
+                replyUsage(sender);
                 return;
             }
 

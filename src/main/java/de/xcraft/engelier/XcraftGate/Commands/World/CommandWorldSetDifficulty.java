@@ -14,10 +14,15 @@ public class CommandWorldSetDifficulty extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld setdifficulty <worldname> <peaceful|easy|normal|hard>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld setdifficulty <worldname> <peaceful|easy|normal|hard>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "World not found: " + worldName);
         } else {

@@ -16,10 +16,15 @@ public class CommandWorldCreate extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld create <worldname> [<environment> [seed]]");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld create <worldname> [<environment> [seed]]");
+            replyUsage(sender);
         } else if (hasWorld(worldName)) {
             reply(sender, "World already exists: " + worldName);
         } else {

@@ -13,10 +13,15 @@ public class CommandGateDelete extends CommandHelperGate {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gate delete <gatename>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String gateName, List<String> args) {
         if (gateName == null) {
             error(sender, "No gate given.");
-            reply(sender, "Usage: /gate delete <gatename>");
+            replyUsage(sender);
         } else if (!gateExists(gateName)) {
             reply(sender, "Gate not found: " + gateName);
         } else {

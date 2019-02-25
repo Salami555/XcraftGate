@@ -14,6 +14,10 @@ public class CommandWorldList extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         String worlds = "";
         for (DataWorld thisWorld : plugin.getWorlds()) {

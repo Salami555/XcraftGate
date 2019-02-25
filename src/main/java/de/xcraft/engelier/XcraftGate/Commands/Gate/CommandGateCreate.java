@@ -14,12 +14,17 @@ public class CommandGateCreate extends CommandHelperGate {
     public CommandGateCreate(XcraftGate plugin) {
         super(plugin);
     }
+    
+    @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gate create <gatename>");
+    }
 
     @Override
     public void execute(CommandSender sender, String gateName, List<String> args) {
         if (gateName == null) {
             error(sender, "No gate given.");
-            reply(sender, "Usage: /gate create <gatename>");
+            replyUsage(sender);
         } else if (gateExists(gateName)) {
             reply(sender, "Gate already exists: " + gateName);
         } else {

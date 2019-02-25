@@ -14,13 +14,18 @@ public class CommandWorldSetTime extends CommandHelperWorld {
     }
 
     @Override
+    public void replyUsage(CommandSender sender) {
+        reply(sender, "Usage: /gworld settime <worldname> <sunrise|noon|sunset|midnight>");
+    }
+
+    @Override
     public void execute(CommandSender sender, String worldName, List<String> args) {
         if (worldName == null) {
             error(sender, "No world given.");
-            reply(sender, "Usage: /gworld settime <worldname> <sunrise|noon|sunset|midnight>");
+            replyUsage(sender);
         } else if (args.isEmpty()) {
             error(sender, "No time given.");
-            reply(sender, "Usage: /gworld settime <worldname> <sunrise|noon|sunset|midnight>");
+            replyUsage(sender);
         } else if (!hasWorld(worldName)) {
             reply(sender, "World not found: " + worldName);
         } else {
